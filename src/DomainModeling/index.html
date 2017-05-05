@@ -24,8 +24,251 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h1>Domain Modeling</h1>
+					<p>I am NOT an expert!</p>
+				</section>
+
+				<section>
+					<section>
+						<h2>What is it?</h2>
+					</section>
+
+					<section>
+						<h4>Modeling the business problem using Object Oriented programming</h4>
+					</section>
+
+					<section>
+						<img src="../Shared/PatternsOfenterpriseAppArch.jpg" />
+					</section>
+
+					<section>
+						<h3>Domain Logic Patterns</h3>
+						<ul>
+							<li>Transaction Script</li>
+							<li>Table Module</li>
+							<li>* Domain Modeling *</li>
+							<li>Service Layer</li>
+						</ul>
+					</section>
+
+					<section>
+						<img src="../Shared/DomainDrivenDesign.jpg" />
+					</section>
+
+					<section>
+						<h3>Domain Driven Design</h3>
+						<ul>
+							<li>Ubiquitous Language - Not doing</li>
+							<li>Domain Modeling Patterns</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>When to use it?</h2>
+					</section>
+
+					<section>
+						<h3>business rules are complex and ever changing</h3>
+					</section>
+
+					<section>
+						<p>Works well with <a href="https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html" target="_blank">Clean Architecture</a></p>
+						<p>as core of code base</p>
+					</section>
+
+					<section>
+						<p>[Domain Model could be any where graphic]</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Bounded Context</h2>
+					</section>
+
+					<section>
+						[Img for single context problem]
+					</section>
+
+					<section>
+						[Img for mulpiple context]
+					</section>
+
+					<section>
+						<h4>NO single model for the entire business</h4>
+					</section>
+
+					<section>
+						<h3>Contexts should...</h3>
+						<ul>
+							<li>Have their own Data Persistence</li>
+							<li>Be Independent and Separated</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<p>Domain Modeling</p>
+					<h2>Building Blocks</h2>
+					<ul>
+						<li>Entity</li>
+						<li>Value Object</li>
+						<li>Repository</li>
+						<li>Domain Services</li>
+						<li>Aggregate</li>
+						<li>Event</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>Entity</h2>
+						<ul>
+							<li>Has an ID</li>
+							<li>Contains Data and Business Logic</li>
+							<li>Home of the Complexity</li>
+							<li>Not Dependency on Persistence Mechanism</li>
+						</ul>
+					</section>
+
+					<section>
+						<pre><code>public class Customer
+{
+	public Customer(
+		Guid id,
+		string firstName,
+		string lastName)
+	{
+		Id = id;
+		FirstName = firstName;
+		LastName = lastName;
+	}
+
+	public Guid Id { get; private set; }
+	public string FirstName { get; private set; }
+	public string LastName { get; private set; }
+
+	public string GetLastFirstName()
+	{
+		return string.Format(
+		"{0}, {1}",
+		LastName,
+		FirstName);
+	}
+}</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Value Object</h2>
+						<ul>
+							<li>Cannot Stand Alone</li>
+						</ul>
+					</section>
+
+					<section>
+						<pre><code>public class Money
+{
+	public Money(
+		decimal amount,
+		string currencyCode)
+	{
+		Amount = amount;
+		CurrencyCode = currencyCode;
+	}
+
+	public decimal Amount { get; }
+	public string CurrencyCode { get; }
+
+	public Money GetConvertedAmount(
+		string requestedCurrencyCode)
+	{
+		var convertedAmount = 0m;
+		// currency conversion business logic
+		return new Money(
+			convertedAmount,
+			requestedCurrencyCode);
+	}
+}</code></pre>
+					</section>
+
+					<section>
+						<pre><code>public class Customer
+{
+	private readonly Money _yearToDateSpend;
+
+	public Customer(
+		Guid id,
+		string firstName,
+		string lastName,
+		Money yearToDateSpend)
+	{
+		Id = id;
+		FirstName = firstName;
+		LastName = lastName;
+		_yearToDateSpend = yearToDateSpend;
+	}
+
+	public Guid Id { get; private set; }
+	public string FirstName { get; private set; }
+	public string LastName { get; private set; }
+
+	public Money GetYearToDateSpend(
+		string currencyCode)
+	{
+		return _yearToDateSpend.GetConvertedAmount(
+			currencyCode);
+	}
+
+	public string GetLastFirstName()
+	{
+		return string.Format(
+		"{0}, {1}",
+		LastName,
+		FirstName);
+	}
+}</code></pre>
+
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Repository</h2>
+						<ul>
+							<li>Entities act Like a Collection / Stream</li>
+							<li>Abstracts Persistence Mechanism from Entities</li>
+							<li>Natural Seam for Tests</li>
+						</ul>
+					</section>
+
+					<section>
+						<pre><code>public interface ICustomerRepository
+{
+	Customer GetById(Guid id);
+
+	void Add(Customer customer);
+
+	void Remove(Customer customer);
+}</code></pre>
+					</section>
+					
+				</section>
+
+				<section>
+					<section>
+						<h2>Domain Services</h2>
+						<ul>
+							<li>Business Logic that is not appropriate for Entities</li>
+						</ul>
+					</section>
+				</section>
 			</div>
 		</div>
 
