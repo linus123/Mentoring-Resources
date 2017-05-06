@@ -26,7 +26,10 @@
 			<div class="slides">
 				<section>
 					<h1>Domain Modeling</h1>
-					<p>I am NOT an expert!</p>
+				</section>
+
+				<section>
+					<img src="http://i2.kym-cdn.com/photos/images/facebook/000/234/765/b7e.jpg" />
 				</section>
 
 				<section>
@@ -132,6 +135,7 @@
 							<li>Contains Data and Business Logic</li>
 							<li>Home of the Complexity</li>
 							<li>Not Dependency on Persistence Mechanism</li>
+							<li>Should Be Valid at All Times</li>
 						</ul>
 					</section>
 
@@ -168,6 +172,7 @@
 						<h2>Value Object</h2>
 						<ul>
 							<li>Cannot Stand Alone</li>
+							<li>Option for Reducing Business Logic in Entity</li>
 						</ul>
 					</section>
 
@@ -267,6 +272,22 @@
 						<ul>
 							<li>Business Logic that is not appropriate for Entities</li>
 						</ul>
+					</section>
+
+					<section>
+						<pre><code>public class CustomerTotalYearToDateSpendCalculator
+{
+	public Money GetTotalYearToDateSpend(
+		IEnumerable&lt;Customer&gt; customers,
+		string currencyCode)
+	{
+		var totalAmount = customers
+			.Select(c => c.GetYearToDateSpend(currencyCode))
+			.Sum(c => c.Amount);
+
+		return new Money(totalAmount, currencyCode);
+	}
+}</code></pre>
 					</section>
 				</section>
 			</div>
