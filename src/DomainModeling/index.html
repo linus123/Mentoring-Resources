@@ -384,10 +384,11 @@
 						<img src="DomainModelingGraphics/Slide4.PNG" />
 					</section>
 
+					<!--Add code example on delegates -->
+
 					<section>
 						<h3>Event Implementation</h3>
 						<ul>
-							<li>Delegates</li>
 							<li><a href="http://udidahan.com/2009/06/14/domain-events-salvation/" target="_blank">Domain Events Class from Udi Dahan</a></li>
 							<li>NServiceBus</li>
 						</ul>
@@ -396,14 +397,23 @@
 				</section>
 
 				<section>
-					<h2>Automated Testing</h2>
-					<p>The domain is a natural seam for testings.</p>
+					<!-- Add diagram on levels of testing -->
+					<section>
+						<h2>Unit Tests</h2>
+						<p>Entities, Aggregates, and Value Objects can be fully tested with unit tests.</p>
+					</section>
+
+					<section>
+						<p>However, try to have the tests simulate real usage.</p>
+					</section>
 				</section>
 
 				<section>
 					<h4>You will get this wrong!</h4>
 					<p>Do NOT do Domain Modeling without tests.</p>
 				</section>
+
+				<!--The role of ORMs in Domain Modeling -->
 
 				<section>
 					<h2>More Learning</h2>
