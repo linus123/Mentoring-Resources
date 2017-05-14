@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Mentoring: Design Patterns</title>
+
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/reveal.css">
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../lib/reveal.js-3.4.1/css/print/pdf.css' : '../../lib/reveal.js-3.4.1/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Design Patterns</h1>
+					<p><a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/ref=sr_1_1?ie=UTF8&qid=1494778738&sr=8-1&keywords=design+patterns" target="_blank">Gang of Four Book</a></p>
+				</section>
+
+				<section>
+					<section>
+						<h2>Decorator Pattern</h2>
+					</section>
+
+					<section>
+						<p>allows behavior to be added to an individual object, either statically or dynamically, without affecting the behavior of other objects from the same class</p>
+						<small>--<a href="https://en.wikipedia.org/wiki/Decorator_pattern" target="_blank">wikipedia</a></small>
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#DecoratorPattern" target="_blank">Sample Code</a></h3>
+					</section>
+
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../../lib/reveal.js-3.4.1/lib/js/head.min.js"></script>
+		<script src="../../lib/reveal.js-3.4.1/js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../lib/reveal.js-3.4.1/plugin/markdown/marked.js' },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/markdown/markdown.js' },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/notes/notes.js', async: true },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
