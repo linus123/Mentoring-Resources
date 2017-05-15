@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="869b6f11-0453-456c-8678-092c8ce964ae" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DesignPatterns/index.html" afterPath="$PROJECT_DIR$/src/DesignPatterns/index.html" />
-    </list>
+    <list default="true" id="869b6f11-0453-456c-8678-092c8ce964ae" name="Default" comment="" />
     <ignored path="Mentoring-Resources.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
