@@ -125,10 +125,7 @@
 					</section>
 				</section>
 
-				<!-- Perhaps made two contexts here... 1: Order Save 2: order Read -->
-
 				<section>
-					<p>Domain Modeling</p>
 					<h2>Building Blocks</h2>
 					<ul>
 						<li>Entity</li>
@@ -143,6 +140,22 @@
 
 				<section>
 					<section>
+						<h2>Coding Examples</h2>
+						<p>Online Shopping Cart</p>
+					</section>
+
+					<section>
+						<h3>Contexts</h3>
+						<ol>
+							<li>Order Creation</li>
+							<li>Order Display</li>
+						</ol>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
 						<h2>Entity</h2>
 						<ul>
 							<li>Has an ID</li>
@@ -151,35 +164,14 @@
 						</ul>
 					</section>
 
-					<!-- I am not sure that the cusotmer example works : perhaps change to order -->
-					<!-- Explain the concept of BEING valid by adding a customer edit entity -->
-
 					<section>
-						<pre><code>public class Customer
-{
-	public Customer(
-		Guid id,
-		string firstName,
-		string lastName)
-	{
-		Id = id;
-		FirstName = firstName;
-		LastName = lastName;
-	}
-
-	public Guid Id { get; private set; }
-	public string FirstName { get; private set; }
-	public string LastName { get; private set; }
-
-	public string GetLastFirstName()
-	{
-		return string.Format(
-		"{0}, {1}",
-		LastName,
-		FirstName);
-	}
-}</code></pre>
+						<h3>Examples</h3>
+						<ul>
+							<li><a href="CodeSamples.html#OrderDisplayContext" target="_blank">Order: Display Context</a></li>
+							<li><a href="CodeSamples.html#OrderCreateContext" target="_blank">Order: Create Context</a></li>
+						</ul>
 					</section>
+
 				</section>
 
 				<section>
@@ -192,67 +184,11 @@
 					</section>
 
 					<section>
-						<pre><code>public class Money
-{
-	public Money(
-		decimal amount,
-		string currencyCode)
-	{
-		Amount = amount;
-		CurrencyCode = currencyCode;
-	}
-
-	public decimal Amount { get; }
-	public string CurrencyCode { get; }
-
-	public Money GetConvertedAmount(
-		string requestedCurrencyCode)
-	{
-		var convertedAmount = 0m;
-		// currency conversion business logic
-		return new Money(
-			convertedAmount,
-			requestedCurrencyCode);
-	}
-}</code></pre>
-					</section>
-
-					<section>
-						<pre><code>public class Customer
-{
-	private readonly Money _yearToDateSpend;
-
-	public Customer(
-		Guid id,
-		string firstName,
-		string lastName,
-		Money yearToDateSpend)
-	{
-		Id = id;
-		FirstName = firstName;
-		LastName = lastName;
-		_yearToDateSpend = yearToDateSpend;
-	}
-
-	public Guid Id { get; private set; }
-	public string FirstName { get; private set; }
-	public string LastName { get; private set; }
-
-	public Money GetYearToDateSpend(
-		string currencyCode)
-	{
-		return _yearToDateSpend.GetConvertedAmount(
-			currencyCode);
-	}
-
-	public string GetLastFirstName()
-	{
-		return string.Format(
-		"{0}, {1}",
-		LastName,
-		FirstName);
-	}
-}</code></pre>
+						<h3>Examples</h3>
+						<ul>
+							<li><a href="CodeSamples.html#MoneyValueObject" target="_blank">Money Value Object</a></li>
+							<li><a href="CodeSamples.html#OrderWithMoney" target="_blank">Order with Money Value Object</a></li>
+						</ul>
 					</section>
 
 				</section>
