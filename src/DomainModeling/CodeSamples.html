@@ -24,26 +24,16 @@
 
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Domain Modeling</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</nav>
-
 <div class="container">
+
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">Domain Modeling</h3>
+    </div>
 
     <div class="row">
 
@@ -177,6 +167,154 @@
         string currencyCode)
     {
         return _shippingCost.GetConvertedAmount(currencyCode);
+    }
+}</code></pre>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <h3 id="OrderAggregateDisplayContext">Order Aggregate: Display Context</h3>
+            <pre><code>public class LineItemForDisplay
+{
+    public LineItemForDisplay(
+        Guid lineItemId,
+        string productName,
+        Money productCost,
+        int quantity)
+    {
+        Quantity = quantity;
+        ProductCost = productCost;
+        ProductName = productName;
+        LineItemId = lineItemId;
+    }
+
+    public Guid LineItemId { get; private set; }
+
+    public string ProductName { get; private set; }
+
+    public Money ProductCost { get; private set; }
+
+    public int Quantity { get; private set; }
+}
+
+public class OrderForDisplay
+{
+    private readonly string _customerFirstName;
+    private readonly string _customerLastName;
+
+    private readonly LineItemForDisplay[] _lineItems;
+
+    public OrderForDisplay(
+        Guid orderId,
+        string customerFirstName,
+        string customerLastName,
+        DateTime orderDate,
+        LineItemForDisplay[] lineItems)
+    {
+        _lineItems = lineItems;
+        _customerLastName = customerLastName;
+        _customerFirstName = customerFirstName;
+        OrderId = orderId;
+        OrderDate = orderDate;
+    }
+
+    public Guid OrderId { get; private set; }
+    public DateTime OrderDate { get; private set; }
+
+    public string GetFullCustomerName()
+    {
+        return string.Format("{0} {1}", _customerFirstName, _customerLastName);
+    }
+
+    public LineItemSummary[] GetLineItems()
+    {
+        return _lineItems
+            .Select(l => new LineItemSummary(l.ProductName, l.Quantity))
+            .ToArray();
+    }
+
+    public class LineItemSummary
+    {
+        public LineItemSummary(
+            string productName,
+            int quantity)
+        {
+            ProductName = productName;
+            Quantity = quantity;
+        }
+
+        public string ProductName { get; private set; }
+
+        public int Quantity { get; private set; }
+    }
+}</code></pre>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <h3 id="OrderAggregateCreateContext">Order Aggregate: Create Context</h3>
+            <pre><code>public class LineItemForCreate
+{
+    public LineItemForCreate(
+        Guid lineItemId)
+    {
+        LineItemId = lineItemId;
+    }
+
+    public Guid LineItemId { get; private set; }
+    public Guid ProductId { get; set; }
+    public int Quantity { get; set; }
+
+    public bool IsValid()
+    {
+        // checks for validation
+        return true;
+    }
+}
+
+public class OrderForCreate
+{
+    private readonly List&lt;LineItemForCreate&gh; _lineItems;
+
+    public OrderForCreate(
+        Guid orderId)
+    {
+        OrderId = orderId;
+        _lineItems = new List&lt;LineItemForCreate&gh;();
+    }
+
+    public Guid OrderId { get; private set; }
+    public Guid CustomerId { get; set; }
+    public DateTime OrderDate { get; set; }
+
+    public bool IsValid()
+    {
+        // checks for validation
+        return true;
+    }
+
+    public void AddLineItem(
+        Guid productId,
+        int quantity)
+    {
+        var lineItemForCreate = new LineItemForCreate(Guid.NewGuid())
+        {
+            ProductId = productId,
+            Quantity = quantity
+        };
+
+        _lineItems.Add(lineItemForCreate);
+    }
+
+    public void Save()
+    {
+        // Save order and line items is single transaction
     }
 }</code></pre>
         </div>

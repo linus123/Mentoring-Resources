@@ -152,6 +152,10 @@
 						</ol>
 					</section>
 
+					<section>
+						<h4>Each context has its own database</h4>
+					</section>
+
 				</section>
 
 				<section>
@@ -205,62 +209,13 @@
 					</section>
 
 					<section>
-						<pre><code>public class LineItem
-{
-	public LineItem(
-		Guid lineItemId,
-		Guid productId,
-		int quantity)
-	{
-		Quantity = quantity;
-		ProductId = productId;
-		LineItemId = lineItemId;
-	}
-
-	public Guid LineItemId { get; private set; }
-	public Guid ProductId { get; private set; }
-	public int Quantity { get; private set; }
-}</code></pre>
+						<h3>Examples</h3>
+						<ul>
+							<li><a href="CodeSamples.html#OrderAggregateDisplayContext" target="_blank">Order Aggregate: Display Context</a></li>
+							<li><a href="CodeSamples.html#OrderAggregateCreateContext" target="_blank">Order Aggregate: Create Context</a></li>
+						</ul>
 					</section>
 
-					<section>
-						<pre><code>public class Order
-{
-	private readonly LineItem[] _lineItems;
-
-	public Order(
-		Guid orderId,
-		LineItem[] lineItems)
-	{
-		_lineItems = lineItems;
-		OrderId = orderId;
-	}
-
-	public Guid OrderId { get; private set; }
-
-	public LineItemSummary[] GetLineItems()
-	{
-		return _lineItems
-			.Select(l => new LineItemSummary(l.ProductId, l.Quantity))
-			.ToArray();
-	}
-
-	public class LineItemSummary
-	{
-		public LineItemSummary(
-			Guid productId,
-			int quantity)
-		{
-			Quantity = quantity;
-			ProductId = productId;
-		}
-
-		public Guid ProductId { get; private set; }
-
-		public int Quantity { get; private set; }
-	}
-}</code></pre>
-					</section>
 
 				</section>
 
