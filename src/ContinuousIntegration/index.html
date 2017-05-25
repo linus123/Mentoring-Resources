@@ -26,7 +26,7 @@
 			<div class="slides">
 
 				<section>
-					<h1>Continuous Integration</h1>
+					<h1>Continuous Integration (CI)</h1>
 				</section>
 
 				<section>
@@ -64,6 +64,144 @@
 				<section>
 					<p>Continuous Integration (CI) is a development practice that requires developers to integrate code into a shared repository several times a day. Each check-in is then verified by an automated build, allowing teams to detect problems early.</p>
 					<small>-- thoughtworks.com</small>
+				</section>
+
+				<section>
+					<small>Book</small>
+					<p><a href="https://www.amazon.com/Continuous-Integration-Improving-Software-Reducing/dp/0321336380" target="_blank">Continuous Integration: Improving Software Quality and Reducing Risk</a></p>
+				</section>
+
+				<section>
+
+					<section>
+						<h2>Fundamentals</h2>
+					</section>
+
+					<section>
+						<h3>Basic Components</h3>
+						<ul>
+							<li>Developer</li>
+							<li>Version Control Repository</li>
+							<li>Continuous Integration (CI) Server</li>
+							<li>Build Script</li>
+							<li>Feedback Mechanism</li>
+						</ul>
+					</section>
+
+					<section>
+						<img src="images/CI_Overview.jpg" />
+						<small>-- Credit: <a href="https://insights.sei.cmu.edu/devops/2015/01/continuous-integration-in-devops-1.html" target="_blank">Aron Cois</a></small>
+					</section>
+
+					<section>
+						<h3>Trigger builds...</h3>
+						<ul>
+							<li>On Every Check-In / Push</li>
+							<li>On a Timer</li>
+							<li>Upon Request</li>
+						</ul>
+					</section>
+
+					<section>
+						<p><strong>We want our CI server configured like our production environment</strong></p>
+						<p><small>...not like our development workstation.</small></p>
+					</section>
+
+					<section>
+						<h3>Build Script</h3>
+						<ul>
+							<li>Complies Code</li>
+							<li>Runs Automated Tests</li>
+							<li>Packages Artifacts*</li>
+							<li>Rebuilds Database*</li>
+							<li>Runs Code Inspection*</li>
+						</ul>
+
+						<p><small>* - Optional</small></p>
+
+					</section>
+
+					<section>
+						<h3>Feedback Mechanisms</h3>
+						<ul>
+							<li>Email</li>
+							<li><a href="https://confluence.jetbrains.com/display/TCD9/Working+with+Windows+Tray+Notifier" target="_blank">Desktop Software</a></li>
+							<li>External Devices</li>
+						</ul>
+
+						<p><small>Google: continuous integration light</small></p>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Keep the software in a constant working state</h2>
+					</section>
+
+					<section>
+						<img src="images/Youve-Broken-The-BUild-Prepare-To-Die-Developer-Meme.jpg" />
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>10 Minute Build Time is Too Long</h2>
+					</section>
+
+					<section>
+						<h3>Options</h3>
+						<ul>
+							<li>Break Up Build</li>
+							<li>Fast Parts Run Often</li>
+							<li>Slow Parts Run Less Often</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Extra Options</h2>
+						<p>Add as System Matures</p>
+					</section>
+
+					<section>
+						<h3>Local Build</h3>
+						<ul>
+							<li>Runs on Developer Machine</li>
+							<li>Subset of CI Server Build</li>
+							<li>Run before Every Check-In</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Artifacts</h3>
+						<ul>
+							<li>Package of the Deployable System</li>
+							<li>Created upon Build Success</li>
+							<li>First Step of Automated Deployment</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Include Database</h3>
+						<ul>
+							<li>CAN be done!</li>
+							<li>Database Objects Only</li>
+							<li>No Data</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>System Version</h3>
+						<ul>
+							<li>Version Example: 1.1.0.36</li>
+							<li>Brand System Artifacts</li>
+							<li>Source Control Label</li>
+						</ul>
+					</section>
+
 				</section>
 
 			</div>
