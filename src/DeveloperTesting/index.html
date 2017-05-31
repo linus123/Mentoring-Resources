@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Mentoring: Automated Testing</title>
+		<title>Mentoring: Developer Testing</title>
 
 		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/reveal.css">
 		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/theme/black.css">
@@ -33,12 +33,15 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h1>Automated Testing</h1>
+					<h1>Developer Testing</h1>
 				</section>
 
 				<section>
-					<p>Automated Testing is...</p>
-					<h2>Tests that are performed by a computer</h2>
+					<h2>Includes</h2>
+					<ul>
+						<li>Unit Tests</li>
+						<li>Integration Tests</li>
+					</ul>
 				</section>
 
 				<section>
@@ -71,17 +74,6 @@
 				</section>
 
 				<section>
-					<h2>Testing Types</h2>
-					<ul>
-						<li>Unit Test</li>
-						<li>Integration Test</li>
-						<li>Behavioral Test</li>
-						<li>User Interface (UI) Test</li>
-					</ul>
-				</section>
-
-				<section>
-					<p class="smallHeading"><small>Testing Type</small></p>
 					<h3>Unit Test</h3>
 
 					<section>
@@ -120,7 +112,6 @@
 				</section>
 
 				<section>
-					<p class="smallHeading"><small>Testing Type</small></p>
 					<h3>Integration Test</h3>
 
 					<section>
@@ -153,102 +144,145 @@
 				</section>
 
 				<section>
-					<p class="smallHeading"><small>Testing Type</small></p>
-					<h3>Behavioral Test</h3>
-
 					<section>
-						<p>Tests driven by the use cases / requirements.</p>
-					</section>
-
-					<section>
-						<h4>The Good</h4>
+						<h2>Testing Discipline</h2>
 						<ul>
-							<li>Closest to the Business Outcome</li>
-							<li>Easily Communicates Progress</li>
-							<li>Business Users can Write Tests</li>
-							<li>Great Open Source Tools</li>
+							<li>Test First</li>
+							<li>Test Driven Development</li>
+							<li>Test Last</li>
 						</ul>
 					</section>
 
 					<section>
-						<h4>The Bad</h4>
-						<ul>
-							<li>VERY Slow</li>
-							<li>Problem of State (x 2)</li>
-							<li>Failure WILL Require Debugging</li>
-							<li>Requires Sophisticated Business User</li>
-						</ul>
+						<h3>Test First</h3>
+						<ol>
+							<li>One or More Test Cases are Written</li>
+							<li>Enough Code is Written to Make Tests Pass</li>
+							<li>Refactor</li>
+						</ol>
 					</section>
 
 					<section>
-						<h4>Requires Custom Fixtures</h4>
+						<h3>Test Driven Development (TDD)</h3>
+						<p><small><a href="http://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html" target="_blank">Red, Green, Refactor</a></small></p>
+						<ol>
+							<li>Create a unit tests that fails.</li>
+							<li>Write production code that makes that test pass.</li>
+							<li>Clean up the mess you just made.</li>
+						</ol>
 					</section>
 
+					<section>
+						<h3>Test Last</h3>
+						<p>Tests are written after the production code is written.</p>
+					</section>
+
+					<section>
+						<h3>Test Last == Test Never</h3>
+					</section>
+				</section>
+
+				<!--
+
+				TAKES PRACTICE!
+
+				Tree graph of testing trade offs
+
+				Books : XUnit Test Patterns, Kent Beck TDD, Art of Unit Testing
+
+				The problem of State
+
+				Research -> More Productive Less BUG
+					test code 3 to 5 times bigger
+					Speed of codeing is NOT typeing
+
+				Test Names
+				Arrange Act Assert
+
+				-->
+
+				<section>
+					<p>Testing at</p>
+					<h2>Abstraction Levels</h2>
 				</section>
 
 				<section>
-					<p class="smallHeading"><small>Testing Type</small></p>
-					<h3>User Interface Test</h3>
-
 					<section>
-						<p>Tests that simulate the user.</p>
-						<p>Includes system tests.</p>
+						<h2>Deterministic Code</h2>
 					</section>
 
 					<section>
-						<h4>The Good</h4>
-						<ul>
-							<li>Best Chance of Catching Errors</li>
-						</ul>
+						<p>Unit Test This</p>
+						<pre><code>public DateTime GetFirstDayOfMonth()
+{
+	var d = DateTime.Now;
+
+	return new DateTime(d.Year, d.Month, 1);
+}</code></pre>
 					</section>
 
 					<section>
-						<h4>The Bad</h4>
-						<ul>
-							<li>EXTREMELY Slow</li>
-							<li>Does not Work for All Test Cases</li>
-							<li>Expensive to Maintain: Brittle</li>
-						</ul>
+						<p>a deterministic system is a system in which no randomness is involved in the development of future states of the system</p>
+						<p>-- wikipedia</p>
 					</section>
 
 					<section>
-						<p>Requires "Safe Testing" Area</p>
-					</section>
-
-				</section>
-
-				<section>
-
-					<section>
-						<h2>The Cost of Change</h2>
+						<h3>deterministic production code is testable code</h3>
 					</section>
 
 					<section>
-						<h3>Software systems last for years</h3>
-						<p>many times decades</p>
+						<p>Testable</p>
+						<pre><code>public DateTime GetFirstDayOfMonth(DateTime currentDay)
+{
+	return new DateTime(currentDay.Year, currentDay.Month, 1);
+}</code></pre>
 					</section>
 
 					<section>
-						<p>Traditional</p>
-						<img src="costOfChangeTraditional.gif" />
+						<p>Testing with Current Date / Time</p>
+						<pre><code>public interface IClock
+{
+	DateTime GetCurrentDate();
+}
+
+public class RealClock : IClock
+{
+	public DateTime GetCurrentDate()
+	{
+		return DateTime.Now;
+	}
+}</code></pre>
 					</section>
 
 					<section>
-						<p>with Automated Tests</p>
-						<img src="costOfChangeBeck.gif" />
+						<p>Testing with Current Date / Time</p>
+						<pre><code>public class ClockForTesting : IClock
+{
+	private readonly DateTime _currentDateTime;
+
+	public ClockForTesting(
+		DateTime currentDateTime)
+	{
+		_currentDateTime = currentDateTime;
+	}
+
+	public DateTime GetCurrentDate()
+	{
+		return _currentDateTime;
+	}
+}</code></pre>
 					</section>
 
 					<section>
-						<h3>Learning Increases up Front Costs</h3>
+						<p>Also Testable</p>
+						<pre><code>public DateTime GetFirstDayOfMonth(IClock clock)
+{
+	var currentDay = clock.GetCurrentDate();
+
+	return new DateTime(currentDay.Year, currentDay.Month, 1);
+}</code></pre>
 					</section>
 
-					<section>
-						<h3>Test code is more valuable than production code</h3>
-					</section>
-
-					<section>
-						<h3>We write tests to create a production system</h3>
-					</section>
 
 				</section>
 
