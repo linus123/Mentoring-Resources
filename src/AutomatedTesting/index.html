@@ -20,12 +20,272 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? '../../lib/reveal.js-3.4.1/css/print/pdf.css' : '../../lib/reveal.js-3.4.1/css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+
+		<style type="text/css">
+			.reveal p.smallHeading {
+				margin-top: 5px;
+				margin-bottom: 5px;
+				line-height: 0
+			}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
 				<section>
 					<h1>Automated Testing</h1>
+				</section>
+
+				<section>
+					<p>Automated Testing is...</p>
+					<h2>Tests that are performed by a computer</h2>
+				</section>
+
+				<section>
+					<section>
+						<h2>Definitions</h2>
+					</section>
+
+					<section>
+						<h3>System Under Test (SUT)</h3>
+						<p>SUT stands for system under test.... When you test something, you refer to the thing you're testing as the SUT.</p>
+						<p><small>-- <a href="https://www.manning.com/books/the-art-of-unit-testing-second-edition" target="_blank">The Art of Unit Testing</a></small></p>
+					</section>
+
+					<section>
+						<h3>Refactoring</h3>
+						<p>The process of restructuring existing computer code - changing the factoring - without changing its external behavior.</p>
+						<p><small>-- <a href="https://www.amazon.com/Refactoring-Improving-Design-Existing-Code/dp/0201485672" target="_blank">Refactoring</a></small></p>
+					</section>
+
+					<section>
+						<h3>Coupling</h3>
+						<ul>
+							<li>the degree of interdependence between software modules</li>
+							<li>a measure of how closely connected two routines or modules are</li>
+							<li>the strength of the relationships between modules</li>
+						</ul>
+						<p><small>-- <a href="https://en.wikipedia.org/wiki/Coupling_(computer_programming)" target="_blank">wikipedia</a></small></p>
+					</section>
+
+				</section>
+
+				<section>
+					<h2>Testing Types</h2>
+					<ul>
+						<li>Unit Test</li>
+						<li>Integration Test</li>
+						<li>Behavioral Test</li>
+						<li>User Interface (UI) Test</li>
+					</ul>
+				</section>
+
+				<section>
+					<p class="smallHeading"><small>Testing Type</small></p>
+					<h3>Unit Test</h3>
+
+					<section>
+						<p>A unit test is a piece of a code (usually a method) that invokes another piece of code and checks the correctness of some assumptions afterward.  If the assumptions turn out to be wrong, the unit test has failed. </p>
+						<p><small>-- <a href="https://www.manning.com/books/the-art-of-unit-testing-second-edition" target="_blank">The Art of Unit Testing</a></small></p>
+					</section>
+
+					<section>
+						<h4>Runs in process</h4>
+					</section>
+
+					<section>
+						<h4>Can be run at a click of a button or a single command</h4>
+					</section>
+
+					<section>
+						<h4>The Good</h4>
+						<ul>
+							<li>Fast</li>
+							<li>Precise Location of Failure</li>
+						</ul>
+					</section>
+
+					<section>
+						<h4>The Bad</h4>
+						<ul>
+							<li>Require Test Doubles (Mocking)</li>
+							<li>Limits Refactoring</li>
+						</ul>
+					</section>
+
+					<section>
+						<h4>Require Practice</h4>
+					</section>
+
+				</section>
+
+				<section>
+					<p class="smallHeading"><small>Testing Type</small></p>
+					<h3>Integration Test</h3>
+
+					<section>
+						<h4>Is a Unit Test</h4>
+						<p>Except: Can execute code out of process.</p>
+					</section>
+
+					<section>
+						<h4>The Good</h4>
+						<ul>
+							<li>Simulates Real Usage</li>
+							<li>Improved Refactoring Options</li>
+						</ul>
+					</section>
+
+					<section>
+						<h4>The Bad</h4>
+						<ul>
+							<li>Slow</li>
+							<li>Problem of State</li>
+							<li>Failure may Require Debugging</li>
+						</ul>
+					</section>
+
+					<section>
+						<h4>Easier to learn</h4>
+						<p><small>compared to Unit Tests</small></p>
+					</section>
+
+				</section>
+
+				<section>
+					<p class="smallHeading"><small>Testing Type</small></p>
+					<h3>Behavioral Test</h3>
+
+					<section>
+						<p>Tests driven by the use cases / requirements.</p>
+					</section>
+
+					<section>
+						<h4>The Good</h4>
+						<ul>
+							<li>Closest to the Business Outcome</li>
+							<li>Easily Communicates Progress</li>
+							<li>Business Users can Write Tests</li>
+							<li>Great Open Source Tools</li>
+						</ul>
+					</section>
+
+					<section>
+						<h4>The Bad</h4>
+						<ul>
+							<li>VERY Slow</li>
+							<li>Problem of State (x 2)</li>
+							<li>Failure WILL Require Debugging</li>
+							<li>Requires Sophisticated Business User</li>
+						</ul>
+					</section>
+
+					<section>
+						<h4>Requires Custom Fixtures</h4>
+					</section>
+
+				</section>
+
+				<section>
+					<p class="smallHeading"><small>Testing Type</small></p>
+					<h3>User Interface Test</h3>
+
+					<section>
+						<p>Tests that simulate the user.</p>
+						<p>Includes system tests.</p>
+					</section>
+
+					<section>
+						<h4>The Good</h4>
+						<ul>
+							<li>Best Chance of Catching Errors</li>
+						</ul>
+					</section>
+
+					<section>
+						<h4>The Bad</h4>
+						<ul>
+							<li>EXTREMELY Slow</li>
+							<li>Does not Work for All Test Cases</li>
+							<li>Expensive to Maintain: Brittle</li>
+						</ul>
+					</section>
+
+					<section>
+						<p>Requires "Safe Testing" Area</p>
+					</section>
+
+				</section>
+
+				<section>
+					<h2>Focusing On</h2>
+					<ul>
+						<li>Unit Tests</li>
+						<li>Integration Tests</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>Testing Discipline</h2>
+						<ul>
+							<li>Test First</li>
+							<li>Test Driven Development</li>
+							<li>Test Last</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Test First</h3>
+						<ol>
+							<li>One or More Test Cases are Written</li>
+							<li>Enough Code is Written to Make Tests Pass</li>
+							<li>Refactor</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Test Driven Development (TDD)</h3>
+						<p><small><a href="http://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html" target="_blank">Red, Green, Refactor</a></small></p>
+						<ol>
+							<li>Create a unit tests that fails.</li>
+							<li>Write production code that makes that test pass.</li>
+							<li>Clean up the mess you just made.</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Test Last</h3>
+						<p>Tests are written after the production code is written.</p>
+					</section>
+
+					<section>
+						<h3>Test Last == Test Never</h3>
+					</section>
+				</section>
+
+				<!--
+
+				TAKES PRACTICE!
+
+				Tree graph of testing trade offs
+
+				Books : XUnit Test Patterns, Kent Beck TDD, Art of Unit Testing
+
+				The problem of State
+
+				Research -> More Productive Less BUG
+					test code 3 to 5 times bigger
+					Speed of codeing is NOT typeing
+
+				Test Names
+				Arrange Act Assert
+
+				-->
+
+				<section>
+					<p>Testing at</p>
+					<h2>Abstraction Levels</h2>
 				</section>
 
 				<section>
@@ -47,6 +307,10 @@
 					<section>
 						<p>with Automated Tests</p>
 						<img src="costOfChangeBeck.gif" />
+					</section>
+
+					<section>
+						<h3>Learning Increases up Front Costs</h3>
 					</section>
 
 					<section>
