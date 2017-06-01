@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mentoring: >Object Oriented Programming</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../starter-template.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../lib/highlight/styles/vs.css">
+    <script src="../../lib/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">Object Oriented Programming</h3>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <h3 id="OrderDisplayContext">Order: Display Context</h3>
+            <pre><code>public class OrderForDisplay
+{
+    private readonly string _customerFirstName;
+    private readonly string _customerLastName;
+
+    public OrderForDisplay(
+        Guid orderId,
+        string customerFirstName,
+        string customerLastName,
+        DateTime orderDate)
+    {
+        _customerLastName = customerLastName;
+        _customerFirstName = customerFirstName;
+        OrderId = orderId;
+        OrderDate = orderDate;
+    }
+
+    public Guid OrderId { get; private set; }
+    public DateTime OrderDate { get; private set; }
+
+    public string GetFullCustomerName()
+    {
+        return string.Format("{0} {1}", _customerFirstName, _customerLastName);
+    }
+}</code></pre>
+        </div>
+
+    </div>
+
+</div><!-- /.container -->
+
+<script src="../../lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</body>
+</html>
