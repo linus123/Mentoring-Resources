@@ -409,51 +409,24 @@ public class Nokia : Mobile
 </code></pre></section>
 
 			</section>
-          <section>
 			<section>
-			    <h2>Interfaces</h2>
-			</section>
-              <section>
-                  <ul>
-                      <li>An interface is defined as a syntactical contract that all the classes inheriting the interface should follow. The interface defines the 'what' part of the syntactical contract and the deriving classes define the 'how' part of the syntactical contract.
-                      </li>
-                      <li>
-                          Interfaces define properties, methods, and events, which are the members of the interface. Interfaces contain only the declaration of the members. It is the responsibility of the deriving class to define the members.
-                      </li>
-                  </ul>
-              </section>
-              
-              <section><pre><code> 
-//The ICar interface should defines all car properties    
-interface ICar
-{
-    int WheelsCount();
-}
-//The IPlane interface should defines all plane properties    
-interface IPlane
-{
-    bool CanFly { get; }
-}</code></pre></section>
-              
-              <section><pre><code>
-//The SuperCar class should implement ICar and IPlane interfaces to become supercar
-class SuperCar : ICar, IPlane
-{
-    //The class should implement both interfaces        
-    public int WheelsCount()
-    {
-        return 4;
-    }
-    public bool CanFly
-    {
-        get
-        {
-            return true;
-        }
-    }
-}
-</code></pre></section>
-      </section> 
+
+				<section>
+					<h2>Interfaces</h2>
+				</section>
+
+				<section>
+					<ul>
+						<li>An interface is defined as a syntactical contract that all the classes inheriting the interface should follow. The interface defines the 'what' part of the syntactical contract and the deriving classes define the 'how' part of the syntactical contract.</li>
+						<li>Interfaces define properties, methods, and events, which are the members of the interface. Interfaces contain only the declaration of the members. It is the responsibility of the deriving class to define the members.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3><a href="CodeSamples.html#InterfacesSystemLog" target="_blank">Interface Example</a></h3>
+				</section>
+
+		  </section>
                 
 
 			</div>

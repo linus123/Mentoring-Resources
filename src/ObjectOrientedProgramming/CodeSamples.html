@@ -38,30 +38,85 @@
     <div class="row">
 
         <div class="col-md-12">
-            <h3 id="OrderDisplayContext">Order: Display Context</h3>
-            <pre><code>public class OrderForDisplay
+            <h3 id="InterfacesSystemLog">Interfaces : System Log</h3>
+            <pre><code>public interface ISystemLog
 {
-    private readonly string _customerFirstName;
-    private readonly string _customerLastName;
+    void LogInfo(string message);
+    void LogError(string message);
+}
 
-    public OrderForDisplay(
-        Guid orderId,
-        string customerFirstName,
-        string customerLastName,
-        DateTime orderDate)
+public class ConsoleSystemLog : ISystemLog
+{
+    public void LogInfo(string message)
     {
-        _customerLastName = customerLastName;
-        _customerFirstName = customerFirstName;
-        OrderId = orderId;
-        OrderDate = orderDate;
+        var m = string.Format("{0} - INFO: {1:yy-MM-dd H:mm:ss zzz}", message, DateTime.Now);
+        Console.WriteLine(m);
     }
 
-    public Guid OrderId { get; private set; }
-    public DateTime OrderDate { get; private set; }
-
-    public string GetFullCustomerName()
+    public void LogError(string message)
     {
-        return string.Format("{0} {1}", _customerFirstName, _customerLastName);
+        var m = string.Format("{0} - ERROR: {1:yy-MM-dd H:mm:ss zzz}", message, DateTime.Now);
+        Console.WriteLine(m);
+    }
+}
+
+public class NoOperationSystemLog : ISystemLog
+{
+    public void LogInfo(string message)
+    {
+    }
+
+    public void LogError(string message)
+    {
+    }
+}
+
+public class DebugSystemLog : ISystemLog
+{
+    public void LogInfo(string message)
+    {
+        var m = string.Format("INFO: {0}", message);
+        Debug.WriteLine(m);
+    }
+
+    public void LogError(string message)
+    {
+        var m = string.Format("ERROR: {0}", message);
+        Debug.WriteLine(m);
+    }
+}
+
+public class Program
+{
+    public void Main()
+    {
+        //var systemLog = new ISystem() <= Will NOT work!
+
+        var consoleSystemLog = new ConsoleSystemLog();
+        DoSomeComplicatedBusinessStuff(consoleSystemLog);
+
+        var noOperationSystemLog = new NoOperationSystemLog();
+        DoSomeComplicatedBusinessStuff(noOperationSystemLog);
+
+        var debugSystemLog = new DebugSystemLog();
+        DoSomeComplicatedBusinessStuff(debugSystemLog);
+    }
+
+    public void DoSomeComplicatedBusinessStuff(
+        ISystemLog systemLog)
+    {
+        systemLog.LogInfo("Starting long running business process.");
+
+        try
+        {
+            // some REALLY complicated stuff
+        }
+        catch (Exception e)
+        {
+            systemLog.LogError(e.Message);
+        }
+
+        systemLog.LogInfo("Long running business process completed.");
     }
 }</code></pre>
         </div>
