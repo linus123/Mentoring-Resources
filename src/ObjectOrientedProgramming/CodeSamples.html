@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Mentoring: >Object Oriented Programming</title>
+    <title>Mentoring: Object Oriented Programming</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,6 +36,82 @@
     </div>
 
     <div class="row">
+    
+            <div class="col-md-12">
+            <h3 id="Abstraction">Abstraction and Encapsulation</h3>
+            <pre><code>public class Employee
+{
+    private string _name;
+    private bool _isHourly;
+    private decimal _hourlyRate;
+    private decimal _yearlySalary;
+    
+    public Employee(
+        string name)
+    {
+        _name = name;
+    }
+    
+    public void SetHourlyRate(
+        decimal rate)
+    {
+        _hourlyRate = rate;
+        _isHourly = true;
+    }
+
+    public void SetYearlySalary(
+        decimal salary)
+    {
+        _yearlySalary = salary;
+        _isHourly = false;
+    }
+
+    public decimal GetTwoWeekPayCheckAmount()
+    {
+        const int twoWeeks = 2;
+        
+        if (_isHourly)
+            return GetPayAmountFromHourlyRate(twoWeeks);
+        else
+            return GetPayAmountFromYearlySalary(twoWeeks);
+    }
+    
+    private decimal GetPayAmountFromHourlyRate(
+        int numberOfWeeks)
+    {
+        const decimal numberOfHoursInWeek = 40m;
+        
+        return _hourlyRate * numberOfHoursInWeek * numberOfWeeks;
+    }
+    
+    private decimal GetPayAmountFromYearlySalary(
+        int numberOfWeeks)
+    {
+        const decimal numberOfWeeksInYear = 52m;
+        
+        return (_yearlySalary / numberOfWeeksInYear) * numberOfWeeks;
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        var paul = new Employee("Paul");
+        paul.SetHourlyRate(25m);
+        
+        var jan = new Employee("Jan");
+        jan.SetYearlySalary(60000m);
+
+        Console.WriteLine(paul.GetTwoWeekPayCheckAmount());
+        // Prints => 2000
+        
+        Console.WriteLine(jan.GetTwoWeekPayCheckAmount());
+        // Prints => 2307.6923076923076923076923076
+    }
+}</code></pre>
+        </div>
+
 
         <div class="col-md-12">
             <h3 id="InterfacesSystemLog">Interfaces : System Log</h3>
