@@ -20,6 +20,12 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? '../../lib/reveal.js-3.4.1/css/print/pdf.css' : '../../lib/reveal.js-3.4.1/css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+
+		<style>
+			.underlineFirst::first-letter{
+				text-decoration: underline;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
@@ -352,7 +358,47 @@ public class FileLogger : Logger
 						<h3><a href="CodeSamples.html#InterfacesSystemLog" target="_blank">Interface Example</a></h3>
 					</section>
 
-			  </section>
+				</section>
+
+				<section>
+					<section>
+						<h2>SOLID Principles</h2>
+					</section>
+
+					<section>
+						<img src="../Shared/AgileSoftwareDevelopment.jpg" />
+					</section>
+
+					<section>
+						<h3>Principles</h3>
+						<ul>
+							<li class="underlineFirst">Single Responsibility</li>
+							<li class="underlineFirst">Open Closed</li>
+							<li class="underlineFirst">Liskov Substitution</li>
+							<li class="underlineFirst">Interface Segregation</li>
+							<li class="underlineFirst">Dependency Inversion</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Design Patterns</h2>
+					</section>
+
+					<section>
+						<img src="../Shared/DesignPatterns.jpg" />
+					</section>
+
+					<section>
+						<h3>Concepts</h3>
+						<ul>
+							<li>Favor Composition Over Inheritance</li>
+							<li>Code to an Interface Rather than a Concrete Class</li>
+						</ul>
+					</section>
+				</section>
+
 			</div>
 		</div>
 
