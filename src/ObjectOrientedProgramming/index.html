@@ -126,35 +126,35 @@
 					  </section>
 			    </section>
 
-			<section>
-				<h3><a href="CodeSamples.html#Abstraction" target="_blank">ABSTRACTION &amp; ENCAPSULATION</a></h3>
-				<p>by Example
-			</section>
+				<section>
+					<h3><a href="CodeSamples.html#Abstraction" target="_blank">ABSTRACTION &amp; ENCAPSULATION</a></h3>
+					<p>by Example
+				</section>
 
-			<section>
-			    <section><h2>INHERITANCE</h2></section>
-			    <section><h4>Create new classes (derived classes) from existing classes (base classes)</h4></section>
-			    <section><h4>The derived class inherits the variables and functions of the base class and adds additional ones!</h4></section>
-			    <section><h4>Provides the ability to re-use existing code </h4></section>
-			    <section>
-			        <h3>Types of Inheritance</h3>
-			        <ul>
-			            <li>Single level inheritance</li>
-			            <li>Multi-level inheritance</li>
-			            <li>Hierarchical inheritance</li>
-			            <li>Hybrid inheritance</li>
-			            <li>Multiple inheritance</li>
-			        </ul>
-			    </section>
-			    <section>
-			        <h3>Single Level Inheritance</h3>
-			        <p>Single base class & a Single derived class </p>
-			    </section>
-			    <section>
-			        <img src="OOP_Images/Slide2.PNG"/>
-			    </section>
-			    <section>
-			        <pre>
+				<section>
+					<section><h2>INHERITANCE</h2></section>
+					<section><h4>Create new classes (derived classes) from existing classes (base classes)</h4></section>
+					<section><h4>The derived class inherits the variables and functions of the base class and adds additional ones!</h4></section>
+					<section><h4>Provides the ability to re-use existing code </h4></section>
+					<section>
+						<h3>Types of Inheritance</h3>
+						<ul>
+							<li>Single level inheritance</li>
+							<li>Multi-level inheritance</li>
+							<li>Hierarchical inheritance</li>
+							<li>Hybrid inheritance</li>
+							<li>Multiple inheritance</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Single Level Inheritance</h3>
+						<p>Single base class & a Single derived class </p>
+					</section>
+					<section>
+						<img src="OOP_Images/Slide2.PNG"/>
+					</section>
+					<section>
+						<pre>
 <code>public class Mobile  
 {  
        //Properties  
@@ -167,18 +167,17 @@ public class Samsung : Mobile  
        //Methods  
 }  
 </code>
-                   </pre>
-			    </section>
-			    <section>
-			        <h3>Multilevel Inheritance</h3>
-			        <p>In Multilevel inheritance, there is more than one single level of derivation
-			        </p>
-			    </section>
-			    <section>
-			        <img src="OOP_Images/Slide3.PNG"/>
-			    </section>
-			    <section><pre><code>
-public class Mobile  
+					   </pre>
+					</section>
+					<section>
+						<h3>Multilevel Inheritance</h3>
+						<p>In Multilevel inheritance, there is more than one single level of derivation
+						</p>
+					</section>
+					<section>
+						<img src="OOP_Images/Slide3.PNG"/>
+					</section>
+					<section><pre><code>public class Mobile  
 {  
        //Properties  
        //Methods  
@@ -194,175 +193,166 @@ public class SamsungS5 : Mobile  
 {  
        //Properties  
        //Methods  
-}  
-</code></pre></section>
-                
-			    <section>
-			        <h3>Hierarchal Inheritance</h3>
-			        <p>Multiple derived class would be extended from base class
-			        </p>
-			    </section>            
-			   
-			    <section>
-			        <img src="OOP_Images/Slide4.PNG"/>
-			    </section>
-			    <section>
-			        <pre><code>
-public class Mobile
+}</code></pre></section>
+
+					<section>
+						<h3>Hierarchal Inheritance</h3>
+						<p>Multiple derived class would be extended from base class
+						</p>
+					</section>
+
+					<section>
+						<img src="OOP_Images/Slide4.PNG"/>
+					</section>
+					<section>
+						<pre><code>public class Mobile
 {
-    //Properties  
-    //Methods  
+	//Properties  
+	//Methods  
 }
 public class Samsumg : Mobile
 {
-    //Properties  
-    //Methods  
+	//Properties  
+	//Methods  
 }
 public class Nokia : Mobile
 {
-    //Properties  
-    //Methods  
+	//Properties  
+	//Methods  
+}</code></pre>
+					</section>
+
+					<section>
+						<h3>Hybrid Inheritance</h3>
+						<p>Single, Multilevel, & Hierarchal inheritance all together construct a Hybrid inheritance.
+						</p>
+					</section>
+
+					<section>
+						<img src="OOP_Images/Slide5.PNG"/>
+					</section>
+
+					<section>
+						<h3>Multiple Inheritance</h3>
+						<p>
+							Multiple inheritance where derived class will extend from multiple base classes.
+						</p>
+					</section>
+					<section>
+						<img src="OOP_Images/Slide6.PNG"/>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Polymorphism</h2>
+					</section>
+					<section>
+						<ul>
+							<li>
+								Refers to the ability of a variable, function or object to take on multiple forms
+							</li>
+							<li>
+								Polymorphism can be static or dynamic.
+								<ul>
+									<li>In static polymorphism, the response to a function is determined at the compile time.</li>
+									<li>In dynamic polymorphism, it is decided at run-time.</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Static Polymorphism</h3>
+						<p>The mechanism of linking a function with an object during compile time is called early binding. It is also called static binding. C# provides two techniques to implement static polymorphism. They are:
+						</p>
+						<ul>
+							<li>Function Overloading</li>
+							<li>Operator Overloading</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Function Overloading</h3>
+						<ul>
+							<li>
+								Can have multiple definitions for the same function name in the same scope.
+							</li>
+							<li>
+								The definition of the function must differ from each other by the types and/or the number of arguments in the argument list.
+							</li>
+						</ul>
+					</section>
+					<section>
+						<pre><code>public class Logger
+{
+	public void Log(string message)
+	{
+		//Some code
+	}
+
+	public void Log(string message, Severity severity)
+	{
+		//Some code
+	}
+}</code>
+				  </pre>
+					</section>
+
+					<section><h3>Dynamic Polymorphism</h3>
+						<ul>
+							<li>Can be achieved using virtual methods
+							</li>
+							<li> Have methods having identical signatures present in both the base and the derived classes
+							</li>
+							<li>
+								Virtual method is one that is declared as virtual in the base class and can allow the subclasses of the type to override the virtual method
+							</li>
+						</ul>
+					</section>
+					<section>
+						<pre><code>public class Logger
+{
+	public virtual void Log(string message)
+	{
+		Console.WriteLine("Inside the Log method of the base class Logger");
+	}
 }
+public class FileLogger : Logger
+{
+	public override void Log(string message)
+	{
+		Console.WriteLine("Inside the Log method of the FileLogger class");
+	}
+}</code></pre>
+					</section>
 
-</code></pre>
-			    </section>
-                
-			    <section>
-			        <h3>Hybrid Inheritance</h3>
-			        <p>Single, Multilevel, & Hierarchal inheritance all together construct a Hybrid inheritance.
-			        </p>
-			    </section>
-                
-			    <section>
-			        <img src="OOP_Images/Slide5.PNG"/>
-			    </section>
-                
-			    <section>
-			        <h3>Multiple Inheritance</h3>
-			        <p>
-			            Multiple inheritance where derived class will extend from multiple base classes.
-			        </p>
-			    </section>
-			    <section>
-			        <img src="OOP_Images/Slide6.PNG"/>
-			    </section>
-			
-			</section>
-                
-			<section>
-			    <section>
-			        <h2>Polymorphism</h2>
-			    </section>
-			    <section>
-			        <ul>
-			            <li>
-			                Refers to the ability of a variable, function or object to take on multiple forms
-			            </li>
-			            <li>
-			                Polymorphism can be static or dynamic.
-			                <ul>
-			                    <li>In static polymorphism, the response to a function is determined at the compile time.</li>
-			                    <li>In dynamic polymorphism, it is decided at run-time.</li>
-			                </ul>
-			            </li>
-			        </ul>
-			    </section>
-                
-			    <section>
-			        <h3>Static Polymorphism</h3>
-			        <p>The mechanism of linking a function with an object during compile time is called early binding. It is also called static binding. C# provides two techniques to implement static polymorphism. They are:
-			        </p>
-			        <ul>
-			            <li>Function Overloading</li>
-			            <li>Operator Overloading</li>
-			        </ul>
-			    </section>
-			    <section>
-			        <h3>Function Overloading</h3>
-			        <ul>
-			            <li>
-			                Can have multiple definitions for the same function name in the same scope.
-			            </li>
-			            <li>
-			                The definition of the function must differ from each other by the types and/or the number of arguments in the argument list.
-			            </li>
-			        </ul>
-			    </section>
-			    <section>
-			        <pre> <code>
-    public class Logger
-    {
-        public void Log(string message)
-        {
-            //Some code
-        }
-        public void Log(string message, Severity severity)
-        {
-            //Some code
-        }
-    }
-</code>
-              </pre>
-			    </section>
-                
-			    <section><h3>Dynamic Polymorphism</h3>
-			        <ul>
-			            <li>Can be achieved using virtual methods
-			            </li>
-			            <li> Have methods having identical signatures present in both the base and the derived classes
-			            </li>
-			            <li>
-                            Virtual method is one that is declared as virtual in the base class and can allow the subclasses of the type to override the virtual method
-			            </li>
-			        </ul>
-                </section>
-			    <section>
-			        <pre><code>public class Logger
-    {
-        public virtual void Log(string message)
-        {
-            Console.WriteLine("Inside the Log method of the base class Logger");
-        }
-    }
-    public class FileLogger : Logger
-    {
-        public override void Log(string message)
-        {
-            Console.WriteLine("Inside the Log method of the FileLogger class");
-        }
-    }
-</code></pre>
-			    </section>
-                
-			    <section><pre><code>static void Main(string[] args)
-        {
-            Logger logger = new FileLogger();
-            logger.Log("Hello World!");
-            Console.ReadKey();
-        }
-</code></pre></section>
+					<section><pre><code>static void Main(string[] args)
+{
+	Logger logger = new FileLogger();
+	logger.Log("Hello World!");
+	Console.ReadKey();
+}</code></pre></section>
 
-			</section>
-			<section>
-
-				<section>
-					<h2>Interfaces</h2>
 				</section>
-
 				<section>
-					<ul>
-						<li>An interface is defined as a syntactical contract that all the classes inheriting the interface should follow. The interface defines the 'what' part of the syntactical contract and the deriving classes define the 'how' part of the syntactical contract.</li>
-						<li>Interfaces define properties, methods, and events, which are the members of the interface. Interfaces contain only the declaration of the members. It is the responsibility of the deriving class to define the members.</li>
-					</ul>
-				</section>
 
-				<section>
-					<h3><a href="CodeSamples.html#InterfacesSystemLog" target="_blank">Interface Example</a></h3>
-				</section>
+					<section>
+						<h2>Interfaces</h2>
+					</section>
 
-		  </section>
-                
+					<section>
+						<ul>
+							<li>An interface is defined as a syntactical contract that all the classes inheriting the interface should follow. The interface defines the 'what' part of the syntactical contract and the deriving classes define the 'how' part of the syntactical contract.</li>
+							<li>Interfaces define properties, methods, and events, which are the members of the interface. Interfaces contain only the declaration of the members. It is the responsibility of the deriving class to define the members.</li>
+						</ul>
+					</section>
 
+					<section>
+						<h3><a href="CodeSamples.html#InterfacesSystemLog" target="_blank">Interface Example</a></h3>
+					</section>
+
+			  </section>
 			</div>
 		</div>
 
