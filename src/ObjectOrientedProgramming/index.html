@@ -195,14 +195,14 @@ public class Samsung : Mobile  
        //Methods  
 }  
 
-public class SamsungS5 : Mobile  
+public class SamsungS5 : Samsung  
 {  
        //Properties  
        //Methods  
 }</code></pre></section>
 
 					<section>
-						<h3>Hierarchal Inheritance</h3>
+						<h3>Hierarchical Inheritance</h3>
 						<p>Multiple derived class would be extended from base class
 						</p>
 					</section>
@@ -335,8 +335,15 @@ public class FileLogger : Logger
 
 					<section><pre><code>static void Main(string[] args)
 {
-	Logger logger = new FileLogger();
+	Logger logger = null;
+
+	if (args.Length > 1)
+		logger = new Logger();
+	else
+		logger = new FileLogger();
+
 	logger.Log("Hello World!");
+
 	Console.ReadKey();
 }</code></pre></section>
 
@@ -349,8 +356,12 @@ public class FileLogger : Logger
 
 					<section>
 						<ul>
-							<li>An interface is defined as a syntactical contract that all the classes inheriting the interface should follow. The interface defines the 'what' part of the syntactical contract and the deriving classes define the 'how' part of the syntactical contract.</li>
-							<li>Interfaces define properties, methods, and events, which are the members of the interface. Interfaces contain only the declaration of the members. It is the responsibility of the deriving class to define the members.</li>
+							<li>A syntactical contract that all the classes inheriting the interface should follow.</li>
+							<li>Defines the 'what' part of the syntactical contract.</li>
+							<li>Deriving classes define the 'how' part of the syntactical contract.</li>
+							<li>Define properties, and methods, which are the members of the interface</li>
+								<li>Interfaces contain only the declaration of the members.</li>
+								<li>It is the responsibility of the deriving class to define the members.</li>
 						</ul>
 					</section>
 
