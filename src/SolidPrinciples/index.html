@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Mentoring: SOA</title>
+
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/reveal.css">
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../lib/reveal.js-3.4.1/css/print/pdf.css' : '../../lib/reveal.js-3.4.1/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Service Oriented Architecture</h1>
+				</section>
+
+				<section>
+					<section>
+						<h2>What is a Service?</h2>
+					</section>
+
+					<section>
+						<h3>Tenets of Service Orientation</h3>
+						<ol>
+							<li>Services are autonomous</li>
+							<li>Services have explicit boundaries</li>
+							<li>Services share contract & schema, not class or type (or database)</li>
+							<li>Service interaction is controlled by policy</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Service</h3>
+						<ul>
+							<li>The technical authority for a specific business capability</li>
+							<li>All data and business rules reside within the service</li>
+							<li>Nothing is "left over" after identifying services</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Example</h2>
+						<aside class="notes">
+							<ul>
+								<li>Best way to explain is to use a possible implementation</li>
+								<li>Not sure if correct</li>
+								<li>1940s Business</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="images/Slide1.PNG" />
+						<aside class="notes">
+							<ul>
+								<li>Service Name - Delay it - changes meaning</li>
+								<li>Not sure if Correct: Ex - VPM Note - Benchmarks?</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="images/Slide2.PNG" />
+						<aside class="notes">
+							<ul>
+								<li>Inv Rpt: Contractors</li>
+								<li>Inv Rpt: Business Process</li>
+								<li>Inv Rpt: Client Starts</li>
+								<li>Inv Rpt: Data is Collected -> Report Pref, Portfolios / Bench, Chars</li>
+								<li>Inv Rpt: IDs - Port Nums, Bench Nums, Vehicle Code</li>
+								<li>Inv Rpt: IDs - Must be STABLE - Vehicle Code NOT Stable</li>
+								<li>Inv Rpt: Send Reports</li>
+								<li>Inv Rpt: Collects Replies</li>
+								<li>Inv Rpt: New Portfolio - memo - if SMA the collect pref</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="images/Slide3.PNG" />
+						<aside class="notes">
+							<ul>
+								<li>Service is a LOGICAL boundary</li>
+								<li>Data is encapsulated with each service - Disclosure Problem</li>
+								<li>Service has owns it's resources - Returns Problem</li>
+								<li>is the only way we can guarantee correct data</li>
+								<li>java Script is included</li>
+								<li>Align teams by service</li>
+								<li>They cannot exchange alot of data</li>
+								<li>Limit Request / Reply</li>
+								<li>Who creates / deploys systems: must be decided</li>
+								<li>Business Process : GIPS</li>
+								<li>Performance: Each Service = 4 Nines - Can control Cashing</li>
+							</ul>
+						</aside>
+					</section>
+
+				</section>
+
+
+			</div>
+		</div>
+
+		<script src="../../lib/reveal.js-3.4.1/lib/js/head.min.js"></script>
+		<script src="../../lib/reveal.js-3.4.1/js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../lib/reveal.js-3.4.1/plugin/markdown/marked.js' },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/markdown/markdown.js' },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/notes/notes.js', async: true },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
