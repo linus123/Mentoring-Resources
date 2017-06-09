@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Mentoring: SOA</title>
+		<title>Mentoring: Clean Architecture</title>
 
 		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/reveal.css">
 		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/theme/black.css">
@@ -25,84 +25,302 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h1>SOLID Principles</h1>
-				</section>
-
-				<section>
-					<img src="../Shared/AgileSoftwareDevelopment.jpg" />
+					<h1>Clean Architecture</h1>
 				</section>
 
 				<section>
 					<section>
-						<h2>Dependency Inversion Principle (DIP)</h2>
+						<h2>Definitions</h2>
 					</section>
 
 					<section>
-						<p>A. High-level modules should not depend on low-level modules. Both should depend on abstractions.</p>
-						<p>B. Abstractions should not depend on details. Details should depend on abstractions.</p>
+						<h3>Service Oriented Architecture</h3>
+
+						<aside class="notes">
+							<ul>
+								<li>Has guide lines on how we create a single application.</li>
+								<li>Guide lines no how we would organize ALL applications.</li>
+								<li>Guide lines on system to system communication.</li>
+								<li>Enterprise strategy for our products.</li>
+								<li>We will be introducing more SOA concepts and SOA terminology</li>
+							</ul>
+						</aside>
 					</section>
 
 					<section>
-						<h3>High Level Policy</h3>
+						<h3>System</h3>
+						<p>A collection of artifacts that make a deploy-able unit.</p>
+
+						<aside class="notes">
+							<ul>
+								<li>Use returns web as example.</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Architectural Style</h3>
+						<p>a coarse grained pattern that provides an abstract framework for a family of systems</p>
+						<small>-- Microsoft</small>
+
+						<aside class="notes">
+							<ul>
+								<li>N-Tier and Clean Arch are styles</li>
+								<li>A system may have multiple arch styles</li>
+							</ul>
+						</aside>
+
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>N-Tier Applications</h2>
+						<p><a href="http://www.c-sharpcorner.com/article/ado-net-from-windows-dna-perspective/" target="_blank">Windows DNA</a></p>
+						<aside class="notes">
+							<ul>
+								<li>Was the "correct" way to build applications from MS in the late 90s to early 2000s.</li>
+								<li>Each layer went on a different machine: distributed computing.</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="Slide1.PNG" />
+						<aside class="notes">
+							<ul>
+								<li>Later we matured to add the business layer as a separate layer from the data layer.</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Good Things</h3>
 						<ul>
-							<li>Use Cases</li>
-							<li>Business Rules</li>
-							<li>Tend to change for Business Reasons</li>
+							<li>Layers Work</li>
+							<li>Simple</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>Layers work and are proven.</li>
+								<li>Simple: Very intuitive</li>
+								<li>Simple: Easy to understand for new devs joining the team.</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Bad Things</h3>
+					</section>
+
+					<section>
+						<h3>Transitive Dependency</h3>
+						<img src="Slide2.PNG" />
+					</section>
+
+					<section>
+						<h4>The Bad Things</h4>
+						<img src="Slide1.PNG" />
+						<aside class="notes">
+							<ul>
+								<li>Presentation layer is dependent on data access and therefore database.</li>
+								<li>Changing a data access DLL requires you to deploy the ENTIRE application.</li>
+								<li>Changes to the database / third party become require all layers to be recompiled and deployed.</li>
+								<li>Easy for programmers to leak data access only object into presentation.</li>
+								<li>Upgrades to DBs / third parties become really risky.</li>
+								<li>Ever had a third party system go away?</li>
+								<li>We have ALL gone though a third party upgraded / change that caused us to rewire signification portions of our system.</li>
+								<li>Microsoft: ADO => Code Blocks => Strong Typed Data Sets => Linq to SQL => EF</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="theDatabase.jpg">
+						<aside class="notes">
+							<ul>
+								<li>All focus shifts to the DB / third party.</li>
+								<li>The database IS the application.</li>
+								<li>We start using the DB as an integration point.  DB were not meant for this.</li>
+								<li>We put shared code in the DB: procs, views, functs</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>We can do better.</h3>
+						<p>Dependency Inversion Principle (DIP)</p>
+						<aside class="notes">
+							<ul>
+								<li>But first we have to understand the DIP</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h2>Clean Architecture</h2>
+						<aside class="notes">
+							<ul>
+								<li>ALT.NET Movement => 2007 - 2008</li>
+								<li>Did not learn the lessons of Java, C++, Small talk</li>
+								<li>This is ONE of a number of changed practices.</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Improved Architecture</h3>
+						<ul>
+							<li>Minimizes the effect of NON-Business Changes</li>
+							<li>Decouples from User Interface Frameworks</li>
+							<li>Decouples the use of databases, 3rd party applications, 3rd party libraries</li>
+							<li>Improved support for Unit Testing</li>
+						</ul>
+					</section>
+
+					<section>
+						<p>Key Concept</p>
+						<h3>BUSINESS RULES => Central Abstraction</h3>
+						<p><em>NOT the database</em></p>
+
+						<aside class="notes">
+							<ul>
+								<li>Make the database a low level detail</li>
+							</ul>
+						</aside>
+
+					</section>
+
+					<section>
+						<h4>Clean Architecture</h4>
+						<img src="Slide6.PNG" />
+						<aside class="notes">
+							<ul>
+								<li>Each Layer points to the once inside</li>
+								<li>Inner domain logic can only be standard code: C#, Python, Etc.  NOT LIBRARIES</li>
+								<li>The core knows nothing about the database or third party software</li>
+								<li>Minimize the code in outside later</li>
+								<li>Can replace outside technologies cheaply</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Business Rules Core Shall...</h3>
+						<ul>
+							<li class="fragment">have no dependencies</li>
+							<li class="fragment">be organized by business rules / uses cases</li>
+							<li class="fragment">contain 80% of system code</li>
+							<li class="fragment">make a good use of OOP</li>
 						</ul>
 
 						<aside class="notes">
 							<ul>
-								<li>Example: Fact Sheets should show a 10yr return for a portfolio.</li>
-								<li>Example: Report should only show incepted portfolios.</li>
-								<li>Example: System should send an email when a submits a web form.</li>
+								<li>Changing a reference is a BIG DEAL</li>
+								<li>Can kill old frameworks</li>
+							</ul>
+						</aside>
+
+					</section>
+
+					<section>
+						<h3>Organized by Business Rules</h3>
+						<img src="PortfolioServiceFolders.png" />
+
+						<aside class="notes">
+							<ul>
+								<li>Names are hard here</li>
+								<li>A possible way to start is with the story</li>
+							</ul>
+						</aside>
+
+					</section>
+
+					<section>
+						<h4>Domain Logic Patterns</h4>
+						<img src="../Shared/PatternsOfenterpriseAppArch.jpg" />
+						<p><a href="https://www.martinfowler.com/eaaCatalog/" target="_blank">Online Catalog</a></p>
+					</section>
+
+					<section>
+						<h4>Dependency Management</h4>
+						<img src="Slide6.PNG" />
+						<aside class="notes">
+							<ul>
+								<li>Blue part may be mare of several modules.</li>
+								<li>During app start up.  Web does not know about data layer, third party code, or other frameworks.  Only knows about business inner laters</li>
+								<li>Need some code to map business layer to outer layer.</li>
+								<li>IoC containers are perfect for this.  Will cover next brownbag.</li>
 							</ul>
 						</aside>
 					</section>
 
 					<section>
-						<h3>Low Level Details</h3>
+						<h2><a href="http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html" target="_blank">Clean Architecture</a></h2>
+						<aside class="notes">
+							<ul>
+								<li>Other terms for this architecture: all same in terms of dependencies</li>
+								<li>Domain Modeling is touched on.</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h4>Testable Architecture</h4>
+						<img src="Slide7.PNG" />
+					</section>
+
+					<section>
+						<h3>Down Side</h3>
+						<p>Adds a Learning Curve</p>
+						<aside class="notes">
+							<ul>
+								<li>New devs tend to fight the architecture chaning references</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>When to Use</h3>
 						<ul>
-							<li>SQL Queries</li>
-							<li>Third party library calls</li>
-							<li>Can change due to NON Business Reasons</li>
+							<li>Good Replacement for N-Tier: MOST of the Time</li>
+							<li>Not good when your code is coupled to 3rd party by definition</li>
 						</ul>
+					</section>
 
-						<aside class="notes">
-							<ul>
-								<li>Example: ADO.NET code</li>
-								<li>Example: Web Forms / MVC code</li>
-								<li>Example: Sending an email.</li>
-							</ul>
-						</aside>
+				</section>
+
+				<section>
+					<section>
+						<h2>Switching to Clean Architecture</h2>
 					</section>
 
 					<section>
-						<img src="images/Slide3.PNG" />
+						<h2>Two Options</h2>
+						<ol>
+							<li>Long Term Refactoring Strategy with Tests</li>
+							<li>Rewrite</li>
+						</ol>
+
 						<aside class="notes">
 							<ul>
+								<li>Recommend one</li>
+								<li>Two is VERY risky</li>
 							</ul>
 						</aside>
+
 					</section>
 
 					<section>
-						<img src="images/Slide4.PNG" />
-						<aside class="notes">
-							<ul>
-							</ul>
-						</aside>
+						<img src="Slide8.PNG" />
 					</section>
 
 					<section>
-						<img src="images/Slide5.PNG" />
-						<aside class="notes">
-							<ul>
-								<li>Convert the boundary</li>
-								<li>Requires map between interfaces and concrete classes</li>
-								<li>Review direction of flow of control</li>
-							</ul>
-						</aside>
+						<h3>Ask for Help</h3>
 					</section>
-
 				</section>
 
 			</div>
