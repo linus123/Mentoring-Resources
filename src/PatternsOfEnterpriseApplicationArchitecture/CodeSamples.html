@@ -37,7 +37,7 @@
 
     <div class="row">
     
-            <div class="col-md-12">
+        <div class="col-md-12">
             <h3 id="TransactionScript">Transaction Script Example</h3>
             <pre><code>static void Main()
 {
@@ -73,6 +73,35 @@
         }
 
         Console.ReadLine();
+    }
+}</code></pre>
+        </div>
+
+        <div class="col-md-12">
+            <h3 id="DomainModelExample">Domain Model Example</h3>
+            <pre><code>public class OrderForDisplay
+{
+    private readonly string _customerFirstName;
+    private readonly string _customerLastName;
+
+    public OrderForDisplay(
+        Guid orderId,
+        string customerFirstName,
+        string customerLastName,
+        DateTime orderDate)
+    {
+        _customerLastName = customerLastName;
+        _customerFirstName = customerFirstName;
+        OrderId = orderId;
+        OrderDate = orderDate;
+    }
+
+    public Guid OrderId { get; private set; }
+    public DateTime OrderDate { get; private set; }
+
+    public string GetFullCustomerName()
+    {
+        return string.Format("{0} {1}", _customerFirstName, _customerLastName);
     }
 }</code></pre>
         </div>
