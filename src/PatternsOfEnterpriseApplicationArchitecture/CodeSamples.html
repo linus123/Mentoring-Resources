@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mentoring: Patterns of Enterprise Application Architecture</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../starter-template.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../lib/highlight/styles/vs.css">
+    <script src="../../lib/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">Object Oriented Programming</h3>
+    </div>
+
+    <div class="row">
+    
+            <div class="col-md-12">
+            <h3 id="TransactionScript">Transaction Script Example</h3>
+            <pre><code>static void Main()
+{
+    string connectionString = "[My Connection String]";
+
+    string queryString = "SELECT ProductID, UnitPrice, ProductName from dbo.products "
+            + "WHERE UnitPrice > @pricePoint "
+            + "ORDER BY UnitPrice DESC;";
+
+    int paramValue = 5;
+
+    using (var connection = new SqlConnection(connectionString))
+    {
+        var command = new SqlCommand(queryString, connection);
+        command.Parameters.AddWithValue("@pricePoint", paramValue);
+
+        try
+        {
+            connection.Open();
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Console.WriteLine("\t{0}\t{1}\t{2}",
+                    reader[0], reader[1], reader[2]);
+            }
+
+            reader.Close();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        Console.ReadLine();
+    }
+}</code></pre>
+        </div>
+
+    </div>
+
+</div><!-- /.container -->
+
+<script src="../../lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</body>
+</html>

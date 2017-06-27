@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Mentoring: Patterns of Enterprise Application Architecture</title>
+
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/reveal.css">
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../lib/reveal.js-3.4.1/css/print/pdf.css' : '../../lib/reveal.js-3.4.1/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style>
+			.reveal p.SmallTopTitle {
+				margin: 0;
+				line-height: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>Patterns of Enterprise Application Architecture</h3>
+				</section>
+
+				<section>
+					<img src="../Shared/PatternsOfenterpriseAppArch.jpg" />
+				</section>
+
+				<section>
+					<h2><a href="https://martinfowler.com/eaaCatalog/" target="_blank">Web Catalog</a></h2>
+				</section>
+
+				<section>
+					<h2>Domain Logic Patterns</h2>
+					<ul>
+						<li>Transaction Script</li>
+						<li>Domain Model</li>
+						<li>Table Module</li>
+						<li>Service Layer *</li>
+					</ul>
+				</section>
+
+				<section>
+					<p class="SmallTopTitle"><small>Domain Logic Patterns</small></p>
+					<h4>Transaction Script</h4>
+
+					<section>
+						<p>Organizes business logic by procedures where each procedure handles a single request from the presentation.</p>
+					</section>
+
+					<section>
+						<h3>Works well when</h3>
+						<ul>
+							<li>business rules are simple</li>
+							<li>business rules rarely change</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Pros</h3>
+						<ul>
+							<li>Simple / Intuitive</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Cons</h3>
+						<ul>
+							<li>Difficult Removing Duplication</li>
+							<li>Coupled to Implementation Details</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#TransactionScript" target="_blank">Example</a></h3>
+					</section>
+
+					<section>
+						<img src="images/SSIS.jpg" />
+					</section>
+
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../../lib/reveal.js-3.4.1/lib/js/head.min.js"></script>
+		<script src="../../lib/reveal.js-3.4.1/js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../lib/reveal.js-3.4.1/plugin/markdown/marked.js' },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/markdown/markdown.js' },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/notes/notes.js', async: true },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
