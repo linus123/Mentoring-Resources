@@ -126,6 +126,48 @@ end</code></pre>
 }</code></pre>
         </div>
 
+        <div class="col-md-12">
+            <h3 id="TableModuleExample">Table Module Example</h3>
+            <pre><code>public class PortfolioTableModule
+{
+    private readonly DataSet _dataSet;
+
+    public PortfolioTableModule(
+        DataSet dataSet)
+    {
+        _dataSet = dataSet;
+    }
+
+    public DataRow this[int number]
+    {
+        get
+        {
+            var filter = string.Format("Number = {0}", number);
+
+            return _dataSet.Tables["Portfolio"].Select(filter)[0];
+        }
+    }
+
+    public int[] GetBenchmarkNumbers(
+        int portfolioNumber)
+    {
+        var filter = string.Format("Portfolio = {0}", portfolioNumber);
+
+        var dataRows = _dataSet.Tables["Benchmark"].Select(filter);
+
+        return dataRows.Select(r => (int)r["Number"]).ToArray();
+    }
+
+    public string GetDisplayName(
+        int portfolioNumber)
+    {
+        var dataRow = this[portfolioNumber];
+
+        return string.Format("{0} - {1}", dataRow["Number"], dataRow["Name"]);
+    }
+}</code></pre>
+        </div>
+
     </div>
 
 </div><!-- /.container -->
