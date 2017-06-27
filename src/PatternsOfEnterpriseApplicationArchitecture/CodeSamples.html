@@ -38,7 +38,7 @@
     <div class="row">
     
         <div class="col-md-12">
-            <h3 id="TransactionScript">Transaction Script Example</h3>
+            <h3 id="TransactionScriptCSharp">Transaction Script Example - C#</h3>
             <pre><code>static void Main()
 {
     string connectionString = "[My Connection String]";
@@ -75,6 +75,26 @@
         Console.ReadLine();
     }
 }</code></pre>
+        </div>
+
+                <div class="col-md-12">
+            <h3 id="TransactionScriptSql">Transaction Script Example - SQL</h3>
+            <pre><code>CREATE PROCEDURE [dbo].[p_InsertFileDate] (
+	@Period_Begin as varchar(1000),
+	@Period_End as varchar(1000),
+	@PBBusDay as Varchar(1000),
+	@PEBusDay as Varchar(1000)
+)
+as
+
+declare @sqlString as varchar(1000)
+
+if not exists (select * from tblFile_Date where period_begin = @Period_Begin and period_end = @Period_End)
+begin
+
+	select @sqlString = 'insert into tblFile_Date values('''+@Period_Begin+''','''+@Period_End+''','''+@PBBusDay+''','''+@PEBusDay+''')'
+	execute (@sqlstring)
+end</code></pre>
         </div>
 
         <div class="col-md-12">
