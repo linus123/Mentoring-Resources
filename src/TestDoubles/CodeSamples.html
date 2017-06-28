@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mentoring: Test Doubles</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../starter-template.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../lib/highlight/styles/vs.css">
+    <script src="../../lib/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">Test Doubles</h3>
+    </div>
+
+    <div class="row">
+    
+        <div class="col-md-12">
+            <h3 id="CustomerRepository">Customer Repository</h3>
+            <pre><code>public class CustomerRepository
+{
+    private ICustomerDataGateway _customerDataGateway;
+
+    public CustomerRepository(
+        ICustomerDataGateway customerDataGateway)
+    {
+        _customerDataGateway = customerDataGateway;
+    }
+
+    public Customer Save(
+        Customer customer)
+    {
+        if (customer.IsNew)
+        {
+            var customerDto = new CustomerDto(){
+                FirstName = customer.FirstName,
+                LastName = customer.LastName
+            };
+
+            var customerId = _customerDataGateway.Insert(CustomerDto dto);
+
+            customer.Id = customerId;
+        }
+        else
+        {
+            var customerDto = new CustomerDto(){
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName
+            };
+
+            _customerDataGateway.Save(CustomerDto dto)
+        }
+
+        return customer;
+    }
+
+    public Customer Get(
+        int customerId)
+    {
+        var customerDto = _customerDataGateway.Get(customerId);
+
+        return new Customer(){
+            Id = customerDto.Id,
+            FirstName = customerDto.FirstName,
+            LastName = customerDto.LastName
+        };
+    }
+}
+
+public class Customer
+{
+    public int? Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+
+    public bool IsNew
+    {
+        get { return !Id.HasValue; }
+    }
+}
+
+// Data Access
+
+public interface ICustomerDataGateway
+{
+    int Insert(CustomerDto dto);
+    void Update(CustomerDto dto);
+    CustomerDto Get(int customerId);
+}
+
+public class CustomerDto
+{
+    public int Id { get; private set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+}</code></pre>
+        </div>
+
+    </div>
+
+</div><!-- /.container -->
+
+<script src="../../lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</body>
+</html>

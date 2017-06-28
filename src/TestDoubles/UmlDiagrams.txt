@@ -1,0 +1,24 @@
+http://www.plantuml.com/plantuml/uml
+
+@startuml
+class CustomerRepository{
++Save(Customer)
++Get(Customer)
+}
+
+
+interface ICustomerDataTableGateway{
++Insert(CustomerDto)
++Update(CustomerDto)
++Get()
+}
+
+class CustomerDataTableGateway{
++Insert(CustomerDto)
++Update(CustomerDto)
++Get()
+}
+
+CustomerRepository --> ICustomerDataTableGateway
+ICustomerDataTableGateway <|-- CustomerDataTableGateway
+@enduml
