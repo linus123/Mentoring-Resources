@@ -22,3 +22,27 @@ class CustomerDataTableGateway{
 CustomerRepository --> ICustomerDataTableGateway
 ICustomerDataTableGateway <|-- CustomerDataTableGateway
 @enduml
+
+
+@startuml
+Client -> CustomerRepository : Get(customerId)
+
+CustomerRepository -> CustomerDataTableGateway : Get(customerId)
+
+CustomerDataTableGateway -> Database : SQL Query
+Database -> CustomerDataTableGateway : Customer Record
+
+CustomerDataTableGateway -> CustomerRepository : CustomerDto
+
+CustomerRepository --> Client : Customer
+@enduml
+
+@startuml
+UnitTest -> CustomerRepository : Get(customerId)
+
+CustomerRepository -> CustomerDataTableGatewayDummy : Get(customerId)
+
+CustomerDataTableGatewayDummy -> CustomerRepository : null
+
+CustomerRepository --> UnitTest : null
+@enduml

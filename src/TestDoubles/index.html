@@ -20,6 +20,13 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? '../../lib/reveal.js-3.4.1/css/print/pdf.css' : '../../lib/reveal.js-3.4.1/css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+
+		<style>
+			.reveal p.SmallTopTitle {
+				margin: 0;
+				line-height: 1;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
@@ -51,7 +58,7 @@
 					</section>
 
 					<section>
-						<img src="images/CustomerRepositoryProductionCode.png" />
+						<img src="images/CustomerRepositoryProductionCodeUml.png" />
 					</section>
 
 					<section>
@@ -60,6 +67,49 @@
 
 				</section>
 
+				<section>
+					<p>Goal</p>
+					<h3>Unit Test Customer Repository</h3>
+				</section>
+
+				<section>
+					<h2>Test Doubles</h2>
+					<ul>
+						<li>Dummy</li>
+						<li>Spy</li>
+						<li>Stub</li>
+						<li>Fake</li>
+						<li>Mock (True Mock)</li>
+					</ul>
+				</section>
+
+				<section>
+					<p class="SmallTopTitle"><small>Test Double</small></p>
+					<h3>Dummy</h3>
+
+					<section>
+						<h4>Returns as close to null as possible</h4>
+					</section>
+
+					<section>
+						<h4>Is mainly a placeholder</h4>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryProductionGetSeq.png" />
+						<p class="SmallTopTitle"><small>Production Code</small></p>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryTestGetWithDummySeq.png" />
+						<p class="SmallTopTitle"><small>Test Code</small></p>
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#UnitTestWithDummy" target="_blank">Code Example</a></h3>
+					</section>
+
+				</section>
 			</div>
 		</div>
 

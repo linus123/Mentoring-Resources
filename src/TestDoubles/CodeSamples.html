@@ -41,10 +41,10 @@
             <h3 id="CustomerRepository">Customer Repository</h3>
             <pre><code>public class CustomerRepository
 {
-    private ICustomerDataGateway _customerDataGateway;
+    private ICustomerDataTableGateway _customerDataGateway;
 
     public CustomerRepository(
-        ICustomerDataGateway customerDataGateway)
+        ICustomerDataTableGateway customerDataGateway)
     {
         _customerDataGateway = customerDataGateway;
     }
@@ -100,11 +100,16 @@ public class Customer
     {
         get { return !Id.HasValue; }
     }
+
+    public string GetDisplayName()
+    {
+        return string.Format("{0}, {1}", LastName, FirstName);
+    }
 }
 
 // Data Access
 
-public interface ICustomerDataGateway
+public interface ICustomerDataTableGateway
 {
     int Insert(CustomerDto dto);
     void Update(CustomerDto dto);
@@ -116,6 +121,39 @@ public class CustomerDto
     public int Id { get; private set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
+}</code></pre>
+        </div>
+
+        <div class="col-md-12">
+            <h3 id="UnitTestWithDummy">Customer Repository with Dummy</h3>
+            <pre><code>public class CustomerDataTableGatewayDummy : ICustomerDataTableGateway
+{
+    int Insert(CustomerDto dto)
+    {
+        return 0;
+    }
+
+    void Update(CustomerDto dto)
+    {
+    }
+
+    CustomerDto Get(int customerId)
+    {
+        return null;
+    }
+}
+
+public class CustomerRepsoitoryTests
+{
+    [Fact]
+    public void GetShouldReturnNullWhenGatewayReturnsNullGivenCustomerId()
+    {
+        var customerRepository = new CustomerRepository(new CustomerDataTableGatewayDummy();
+
+        var customer = customerRepository.Get(10);
+
+        Assert.Equal(customer, null);
+    }
 }</code></pre>
         </div>
 
