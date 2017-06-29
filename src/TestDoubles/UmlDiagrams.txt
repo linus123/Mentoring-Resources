@@ -23,6 +23,9 @@ CustomerRepository --> ICustomerDataTableGateway
 ICustomerDataTableGateway <|-- CustomerDataTableGateway
 @enduml
 
+**********************
+Production Get
+**********************
 
 @startuml
 Client -> CustomerRepository : Get(customerId)
@@ -34,8 +37,12 @@ Database -> CustomerDataTableGateway : Customer Record
 
 CustomerDataTableGateway -> CustomerRepository : CustomerDto
 
-CustomerRepository --> Client : Customer
+CustomerRepository -> Client : Customer
 @enduml
+
+**********************
+Test Get with Dummy
+**********************
 
 @startuml
 UnitTest -> CustomerRepository : Get(customerId)
@@ -44,5 +51,22 @@ CustomerRepository -> CustomerDataTableGatewayDummy : Get(customerId)
 
 CustomerDataTableGatewayDummy -> CustomerRepository : null
 
-CustomerRepository --> UnitTest : null
+CustomerRepository -> UnitTest : null
+@enduml
+
+**********************
+Production Save with Update
+**********************
+
+@startuml
+Client -> CustomerRepository : Save(Customer)
+
+CustomerRepository -> CustomerDataTableGateway : Update(CustomerDto)
+
+CustomerDataTableGateway -> Database : SQL Update Query
+Database -> CustomerDataTableGateway : CustomerId
+
+CustomerDataTableGateway -> CustomerRepository : CustomerId
+
+CustomerRepository -> Client : Customer
 @enduml
