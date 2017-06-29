@@ -70,3 +70,60 @@ CustomerDataTableGateway -> CustomerRepository : CustomerId
 
 CustomerRepository -> Client : Customer
 @enduml
+
+**********************
+Test Save with Update with Spy
+**********************
+
+@startuml
+UnitTest -> UnitTest : Create Customer
+
+UnitTest -> CustomerRepository : Save(Customer)
+
+CustomerRepository -> CustomerDataTableGatewaySpy : Update(CustomerDto)
+
+CustomerDataTableGatewaySpy -> CustomerDataTableGatewaySpy : Save Call
+
+CustomerDataTableGatewaySpy -> CustomerRepository :
+
+CustomerRepository -> UnitTest : Customer
+
+UnitTest -> CustomerDataTableGatewaySpy : WasUpdatedCalled
+CustomerDataTableGatewaySpy -> UnitTest : true
+
+UnitTest -> CustomerDataTableGatewaySpy : GetUpdatedCustomerDto
+CustomerDataTableGatewaySpy -> UnitTest : CustomerDto
+@enduml
+
+**********************
+Production GetAll
+**********************
+
+@startuml
+Client -> CustomerRepository : GetAll()
+
+CustomerRepository -> CustomerDataTableGateway : GetAll()
+
+CustomerDataTableGateway -> Database : SQL Query
+Database -> CustomerDataTableGateway : Customer Record
+
+CustomerDataTableGateway -> CustomerRepository : CustomerDto[]
+
+CustomerRepository -> Client : Customer[]
+@enduml
+
+**********************
+Test GetAll With Spy
+**********************
+
+@startuml
+UnitTest -> CustomerRepository : GetAll()
+
+CustomerRepository -> CustomerDataTableGatewayStub : GetAll()
+
+CustomerDataTableGatewayStub -> CustomerDataTableGatewayStub : Create Test Data
+
+CustomerDataTableGatewayStub -> CustomerRepository : CustomerDto[]
+
+CustomerRepository -> UnitTest : Customer[]
+@enduml
