@@ -113,7 +113,7 @@ CustomerRepository -> Client : Customer[]
 @enduml
 
 **********************
-Test GetAll With Spy
+Test GetAll With Stub
 **********************
 
 @startuml
@@ -127,3 +127,7 @@ CustomerDataTableGatewayStub -> CustomerRepository : CustomerDto[]
 
 CustomerRepository -> UnitTest : Customer[]
 @enduml
+
+**********************
+Test GetAll With Fake
+**********************
