@@ -41,7 +41,7 @@
             <h3 id="CustomerRepository">Customer Repository</h3>
             <pre><code>public class CustomerRepository
 {
-    private ICustomerDataTableGateway _customerDataGateway;
+    private readonly ICustomerDataTableGateway _customerDataGateway;
 
     public CustomerRepository(
         ICustomerDataTableGateway customerDataGateway)
@@ -49,40 +49,41 @@
         _customerDataGateway = customerDataGateway;
     }
 
-    public Customer Save(
-        Customer customer)
+    public Customer Save(Customer customer)
     {
         if (customer.IsNew)
         {
-            var customerDto = new CustomerDto(){
+            var customerDto = new CustomerDto
+            {
                 FirstName = customer.FirstName,
                 LastName = customer.LastName
             };
 
-            var customerId = _customerDataGateway.Insert(CustomerDto dto);
+            var customerId = _customerDataGateway.Insert(customerDto);
 
             customer.Id = customerId;
         }
         else
         {
-            var customerDto = new CustomerDto(){
-                Id = customer.Id,
+            var customerDto = new CustomerDto
+            {
+                Id = customer.Id.GetValueOrDefault(0),
                 FirstName = customer.FirstName,
                 LastName = customer.LastName
             };
 
-            _customerDataGateway.Save(CustomerDto dto)
+            _customerDataGateway.Update(customerDto);
         }
 
         return customer;
     }
 
-    public Customer Get(
-        int customerId)
+    public Customer Get(int customerId)
     {
         var customerDto = _customerDataGateway.Get(customerId);
 
-        return new Customer(){
+        return new Customer
+        {
             Id = customerDto.Id,
             FirstName = customerDto.FirstName,
             LastName = customerDto.LastName
@@ -94,7 +95,8 @@
         var customerDtos = _customerDataGateway.GetAll();
 
         return customerDtos
-            .Select(d => new Customer(){
+            .Select(d => new Customer
+            {
                 Id = d.Id,
                 FirstName = d.FirstName,
                 LastName = d.LastName
@@ -132,7 +134,7 @@ public interface ICustomerDataTableGateway
 
 public class CustomerDto
 {
-    public int Id { get; private set; }
+    public int Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
 }</code></pre>
@@ -142,21 +144,21 @@ public class CustomerDto
             <h3 id="UnitTestWithDummy">Customer Repository Test with Dummy</h3>
             <pre><code>public class CustomerDataTableGatewayDummy : ICustomerDataTableGateway
 {
-    int Insert(CustomerDto dto)
+    public int Insert(CustomerDto dto)
     {
         return 0;
     }
 
-    void Update(CustomerDto dto)
+    public void Update(CustomerDto dto)
     {
     }
 
-    CustomerDto Get(int customerId)
+    public CustomerDto Get(int customerId)
     {
         return null;
     }
 
-    CustomerDto[] GetAll()
+    public CustomerDto[] GetAll()
     {
         return new CustomerDto[0];
     }
@@ -188,10 +190,10 @@ public class CustomerRepositoryTests
 
     public CustomerDto GetUpdatedCustomerDto()
     {
-        return;
+        return _updatedCustomerDto;
     }
 
-    void Update(CustomerDto dto)
+    public void Update(CustomerDto dto)
     {
         WasUpdateCalled = true;
         _updatedCustomerDto = dto;
@@ -201,7 +203,7 @@ public class CustomerRepositoryTests
 
     public bool WasInsertCalled { get; set; }
 
-    int Insert(CustomerDto dto)
+    public int Insert(CustomerDto dto)
     {
         WasInsertCalled = true;
         return 0;
@@ -209,27 +211,28 @@ public class CustomerRepositoryTests
 
     // **
 
-    CustomerDto Get(int customerId)
+    public CustomerDto Get(int customerId)
     {
         return null;
     }
 
     // **
 
-    CustomerDto[] GetAll()
+    public CustomerDto[] GetAll()
     {
         return new CustomerDto[0];
     }
 }
 
-public class CustomerRepositoryTests
+public class CustomerRepositoryTests2
 {
     [Fact]
     public void SaveShouldCallUpdatedOnCustomerWithId()
     {
         var customerDataTableGatewaySpy = new CustomerDataTableGatewaySpy();
 
-        var customer = new Customer() {
+        var customer = new Customer()
+        {
             Id = 100,
             FirstName = "firstname",
             LastName = "lastname"
@@ -243,9 +246,9 @@ public class CustomerRepositoryTests
 
         var customerDto = customerDataTableGatewaySpy.GetUpdatedCustomerDto();
 
-        Assert.True(customerDto.Id, 100);
-        Assert.True(customerDto.FirstName, "firstname");
-        Assert.True(customerDto.LastName, "lastname");
+        Assert.Equal(customerDto.Id, 100);
+        Assert.Equal(customerDto.FirstName, "firstname");
+        Assert.Equal(customerDto.LastName, "lastname");
 
         Assert.False(customerDataTableGatewaySpy.WasInsertCalled);
     }
