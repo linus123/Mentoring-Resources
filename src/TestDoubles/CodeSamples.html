@@ -255,6 +255,92 @@ public class CustomerRepositoryTests2
 }</code></pre>
     </div>
 
+    <div class="col-md-12">
+        <h3 id="UnitTestWithStub">Customer Repository Test with Stub</h3>
+            <pre><code>public class CustomerDataTableGatewayStub : ICustomerDataTableGateway
+{
+    public int Insert(CustomerDto dto)
+    {
+        return 0;
+    }
+
+    public void Update(CustomerDto dto)
+    {
+    }
+
+    public CustomerDto Get(int customerId)
+    {
+        return null;
+    }
+
+    // **
+
+    public bool GetAllWasCalled { get; private set; }
+
+    public CustomerDto[] GetAll()
+    {
+        GetAllWasCalled = true;
+
+        var customerDto0 = new CustomerDto()
+        {
+            Id = 100,
+            FirstName = "firstname0",
+            LastName = "lastname0"
+        };
+
+        var customerDto1 = new CustomerDto()
+        {
+            Id = 101,
+            FirstName = "firstname1",
+            LastName = "lastname1"
+        };
+
+        var customerDto2 = new CustomerDto()
+        {
+            Id = 102,
+            FirstName = "firstname2",
+            LastName = "lastname2"
+        };
+
+        return new[]
+        {
+            customerDto0,
+            customerDto1,
+            customerDto2
+        };
+    }
+}
+
+public class CustomerRepositoryTests3
+{
+    [Fact]
+    public void GetAllShouldReturnTheExpectedCustomerSet()
+    {
+        var customerDataTableGatewayStub = new CustomerDataTableGatewayStub();
+
+        var customerRepository = new CustomerRepository(customerDataTableGatewayStub);
+
+        var customers = customerRepository.GetAll();
+
+        Assert.True(customerDataTableGatewayStub.GetAllWasCalled);
+
+        Assert.Equal(3, customers.Length);
+
+        Assert.Equal(100, customers[0].GetIdOrDefault(0));
+        Assert.Equal("firstname0", customers[0].FirstName);
+        Assert.Equal("lastname0", customers[0].LastName);
+
+        Assert.Equal(101, customers[1].GetIdOrDefault(0));
+        Assert.Equal("firstname1", customers[1].FirstName);
+        Assert.Equal("lastname1", customers[1].LastName);
+
+        Assert.Equal(102, customers[2].GetIdOrDefault(0));
+        Assert.Equal("firstname2", customers[2].FirstName);
+        Assert.Equal("lastname2", customers[2].LastName);
+    }
+}</code></pre>
+    </div>
+
 </div>
 
 </div><!-- /.container -->
