@@ -183,6 +183,15 @@
 						<h3><a href="CodeSamples.html#UnitTestWithStub" target="CodeExample">Code Example</a></h3>
 					</section>
 
+					<section>
+						<p>Tip</p>
+						<h3>Limit the reuse of stubs to lookup data</h3>
+					</section>
+
+					<section>
+						<p>[Image showing coupling the data reuse problem]</p>
+					</section>
+
 				</section>
 
 				<section>
@@ -237,18 +246,57 @@
 
 				<section>
 					<section>
-						<h3>Limit the reuse of spies and stubs</h3>
+						<h3>Coded Test Doubles</h3>
+						<p>vs.</p>
+						<h3>Mocking Frameworks</h3>
 					</section>
 
 					<section>
-						<p>[Image showing coupling the data reuse problem]</p>
-					</section>
-				</section>
+						<h3>Coded Test Doubles</h3>
 
-				<section>
-					<section>
-						<h3>Frameworks vs. Coded Test Doubles</h3>
+						<div style="float:left;width:50%;" class="centered">
+
+							<h4>Pros</h4>
+							<ul>
+								<li>More Understandable</li>
+							</ul>
+
+						</div>
+						<div style="float:right;width:50%;padding-right:0px;">
+							<h4>Cons</h4>
+
+							<ul>
+								<li>Increased Test Code</li>
+							</ul>
+						</div>
+
+						<br clear="all">
 					</section>
+
+					<section>
+						<h3>Mocking Frameworks</h3>
+
+						<div style="float:left;width:50%;" class="centered">
+
+							<h4>Pros</h4>
+							<ul>
+								<li>Less Code</li>
+							</ul>
+
+
+						</div>
+						<div style="float:right;width:50%;padding-right:0px;">
+							<h4>Cons</h4>
+
+							<ul>
+								<li>Complicated</li>
+								<li>Equality Problem</li>
+							</ul>
+						</div>
+
+						<br clear="all">
+					</section>
+
 				</section>
 
 			</div>
