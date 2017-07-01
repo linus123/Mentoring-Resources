@@ -1,0 +1,37 @@
+http://www.plantuml.com/plantuml/uml
+
+**********************
+Interface Example
+**********************
+
+@startuml
+class ConsoleSystemLog{
++LogInfo(string message)
++LogError(string message)
+}
+
+class NoOperationSystemLog{
++LogInfo(string message)
++LogError(string message)
+}
+
+class DebugSystemLog{
++LogInfo(string message)
++LogError(string message)
+}
+
+class ComplicatedBusinessProgram{
++DoSomeComplicatedBusinessStuff(ISystemLog)
+}
+
+interface ISystemLog{
++LogInfo(string message);
++LogError(string message);
+}
+
+ISystemLog <|-- ConsoleSystemLog
+ISystemLog <|-- NoOperationSystemLog
+ISystemLog <|-- DebugSystemLog
+ComplicatedBusinessProgram --> ISystemLog
+@enduml
+
