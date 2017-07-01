@@ -39,494 +39,599 @@
     
         <div class="col-md-12">
             <h3 id="CustomerRepository">Customer Repository</h3>
-            <pre><code>public class CustomerRepository
-{
-    private readonly ICustomerDataTableGateway _customerDataGateway;
-
-    public CustomerRepository(
-        ICustomerDataTableGateway customerDataGateway)
+            <pre><code>    public class CustomerRepository
     {
-        _customerDataGateway = customerDataGateway;
-    }
+        private readonly ICustomerDataTableGateway _customerDataGateway;
 
-    public Customer Save(Customer customer)
-    {
-        if (customer.IsNew)
+        public CustomerRepository(
+            ICustomerDataTableGateway customerDataGateway)
         {
-            var customerDto = new CustomerDto
-            {
-                FirstName = customer.FirstName,
-                LastName = customer.LastName
-            };
-
-            var customerId = _customerDataGateway.Insert(customerDto);
-
-            customer.Id = customerId;
-        }
-        else
-        {
-            var customerDto = new CustomerDto
-            {
-                Id = customer.Id.GetValueOrDefault(0),
-                FirstName = customer.FirstName,
-                LastName = customer.LastName
-            };
-
-            _customerDataGateway.Update(customerDto);
+            _customerDataGateway = customerDataGateway;
         }
 
-        return customer;
-    }
-
-    public Customer Get(int customerId)
-    {
-        var customerDto = _customerDataGateway.Get(customerId);
-
-        return new Customer
+        public Customer Save(Customer customer)
         {
-            Id = customerDto.Id,
-            FirstName = customerDto.FirstName,
-            LastName = customerDto.LastName
-        };
-    }
-
-    public Customer[] GetAll()
-    {
-        var customerDtos = _customerDataGateway.GetAll();
-
-        return customerDtos
-            .Select(d => new Customer
+            if (customer.IsNew)
             {
-                Id = d.Id,
-                FirstName = d.FirstName,
-                LastName = d.LastName
-            })
-            .ToArray();
+                var customerDto = new CustomerDto
+                {
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName
+                };
+
+                var customerId = _customerDataGateway.Insert(customerDto);
+
+                customer.Id = customerId;
+            }
+            else
+            {
+                var customerDto = new CustomerDto
+                {
+                    Id = customer.Id.GetValueOrDefault(0),
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName
+                };
+
+                _customerDataGateway.Update(customerDto);
+            }
+
+            return customer;
+        }
+
+        public Customer Get(int customerId)
+        {
+            var customerDto = _customerDataGateway.Get(customerId);
+
+            if (customerDto == null)
+                return null;
+
+            return new Customer
+            {
+                Id = customerDto.Id,
+                FirstName = customerDto.FirstName,
+                LastName = customerDto.LastName
+            };
+        }
+
+        public Customer[] GetAll()
+        {
+            var customerDtos = _customerDataGateway.GetAll();
+
+            return customerDtos
+                .Select(d => new Customer
+                {
+                    Id = d.Id,
+                    FirstName = d.FirstName,
+                    LastName = d.LastName
+                })
+                .ToArray();
+        }
     }
-}
 
-public class Customer
-{
-    public int? Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-
-    public bool IsNew
+    public class Customer
     {
-        get { return !Id.HasValue; }
+        public int? Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public bool IsNew
+        {
+            get { return !Id.HasValue; }
+        }
+
+        public string GetDisplayName()
+        {
+            return string.Format("{0}, {1}", LastName, FirstName);
+        }
+
+        public int GetIdOrZero()
+        {
+            return Id.GetValueOrDefault(0);
+        }
     }
 
-    public string GetDisplayName()
+    // Data Access
+
+    public interface ICustomerDataTableGateway
     {
-        return string.Format("{0}, {1}", LastName, FirstName);
+        int Insert(CustomerDto dto);
+        void Update(CustomerDto dto);
+        CustomerDto Get(int customerId);
+        CustomerDto[] GetAll();
     }
-}
 
-// Data Access
-
-public interface ICustomerDataTableGateway
-{
-    int Insert(CustomerDto dto);
-    void Update(CustomerDto dto);
-    CustomerDto Get(int customerId);
-    CustomerDto[] GetAll();
-}
-
-public class CustomerDto
-{
-    public int Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-}</code></pre>
+    public class CustomerDto
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }</code></pre>
         </div>
 
         <div class="col-md-12">
             <h3 id="UnitTestWithDummy">Customer Repository Test with Dummy</h3>
-            <pre><code>public class CustomerDataTableGatewayDummy : ICustomerDataTableGateway
-{
-    public int Insert(CustomerDto dto)
+            <pre><code>    public class CustomerDataTableGatewayDummy : ICustomerDataTableGateway
     {
-        return 0;
+        public int Insert(CustomerDto dto)
+        {
+            return 0;
+        }
+
+        public void Update(CustomerDto dto)
+        {
+        }
+
+        public CustomerDto Get(int customerId)
+        {
+            return null;
+        }
+
+        public CustomerDto[] GetAll()
+        {
+            return new CustomerDto[0];
+        }
     }
 
-    public void Update(CustomerDto dto)
+    public class CustomerRepositoryTests
     {
-    }
+        [Fact]
+        public void GetShouldReturnNullWhenGatewayReturnsNullGivenCustomerId()
+        {
+            var customerRepository = new CustomerRepository(new CustomerDataTableGatewayDummy());
 
-    public CustomerDto Get(int customerId)
-    {
-        return null;
-    }
+            var customer = customerRepository.Get(10);
 
-    public CustomerDto[] GetAll()
-    {
-        return new CustomerDto[0];
-    }
-}
+            Assert.Equal(customer, null);
+        }
 
-public class CustomerRepositoryTests
-{
-    [Fact]
-    public void GetShouldReturnNullWhenGatewayReturnsNullGivenCustomerId()
-    {
-        var customerRepository = new CustomerRepository(new CustomerDataTableGatewayDummy();
+        [Fact]
+        public void GetShouldReturnNullWhenGatewayReturnsNullGivenCustomerIdWithFramework()
+        {
+            var customerDataTableGatewayMock = new Mock&lt;ICustomerDataTableGateway&gt;();
 
-        var customer = customerRepository.Get(10);
+            var customerRepository = new CustomerRepository(customerDataTableGatewayMock.Object);
 
-        Assert.Equal(customer, null);
-    }
-}</code></pre>
+            var customer = customerRepository.Get(10);
+
+            Assert.Equal(customer, null);
+        }
+    }</code></pre>
         </div>
 
     </div>
 
     <div class="col-md-12">
         <h3 id="UnitTestWithSpy">Customer Repository Test with Spy</h3>
-            <pre><code>public class CustomerDataTableGatewaySpy : ICustomerDataTableGateway
-{
-    private CustomerDto _updatedCustomerDto;
-
-    public bool WasUpdateCalled { get; set; }
-
-    public CustomerDto GetUpdatedCustomerDto()
+            <pre><code>    public class CustomerDataTableGatewaySpy : ICustomerDataTableGateway
     {
-        return _updatedCustomerDto;
-    }
+        private CustomerDto _updatedCustomerDto;
 
-    public void Update(CustomerDto dto)
-    {
-        WasUpdateCalled = true;
-        _updatedCustomerDto = dto;
-    }
+        public bool WasUpdateCalled { get; set; }
 
-    // **
-
-    public bool WasInsertCalled { get; set; }
-
-    public int Insert(CustomerDto dto)
-    {
-        WasInsertCalled = true;
-        return 0;
-    }
-
-    // **
-
-    public CustomerDto Get(int customerId)
-    {
-        return null;
-    }
-
-    // **
-
-    public CustomerDto[] GetAll()
-    {
-        return new CustomerDto[0];
-    }
-}
-
-public class CustomerRepositoryTests2
-{
-    [Fact]
-    public void SaveShouldCallUpdatedOnCustomerWithId()
-    {
-        var customerDataTableGatewaySpy = new CustomerDataTableGatewaySpy();
-
-        var customer = new Customer()
+        public CustomerDto GetUpdatedCustomerDto()
         {
-            Id = 100,
-            FirstName = "firstname",
-            LastName = "lastname"
-        };
+            return _updatedCustomerDto;
+        }
 
-        var customerRepository = new CustomerRepository(customerDataTableGatewaySpy);
+        public void Update(CustomerDto dto)
+        {
+            WasUpdateCalled = true;
+            _updatedCustomerDto = dto;
+        }
 
-        customer = customerRepository.Save(customer);
+        // **
 
-        Assert.True(customerDataTableGatewaySpy.WasUpdateCalled);
+        public bool WasInsertCalled { get; set; }
 
-        var customerDto = customerDataTableGatewaySpy.GetUpdatedCustomerDto();
+        public int Insert(CustomerDto dto)
+        {
+            WasInsertCalled = true;
+            return 0;
+        }
 
-        Assert.Equal(customerDto.Id, 100);
-        Assert.Equal(customerDto.FirstName, "firstname");
-        Assert.Equal(customerDto.LastName, "lastname");
+        // **
 
-        Assert.False(customerDataTableGatewaySpy.WasInsertCalled);
+        public CustomerDto Get(int customerId)
+        {
+            return null;
+        }
+
+        // **
+
+        public CustomerDto[] GetAll()
+        {
+            return new CustomerDto[0];
+        }
     }
-}</code></pre>
+
+    public class CustomerRepositoryTests2
+    {
+        [Fact]
+        public void SaveShouldCallUpdatedOnCustomerWithId()
+        {
+            var customerDataTableGatewaySpy = new CustomerDataTableGatewaySpy();
+
+            var customer = new Customer()
+            {
+                Id = 100,
+                FirstName = "firstname",
+                LastName = "lastname"
+            };
+
+            var customerRepository = new CustomerRepository(customerDataTableGatewaySpy);
+
+            customer = customerRepository.Save(customer);
+
+            Assert.True(customerDataTableGatewaySpy.WasUpdateCalled);
+
+            var customerDto = customerDataTableGatewaySpy.GetUpdatedCustomerDto();
+
+            Assert.Equal(customerDto.Id, 100);
+            Assert.Equal(customerDto.FirstName, "firstname");
+            Assert.Equal(customerDto.LastName, "lastname");
+
+            Assert.False(customerDataTableGatewaySpy.WasInsertCalled);
+        }
+
+        [Fact]
+        public void SaveShouldCallUpdatedOnCustomerWithIdWithFrameWork()
+        {
+            var customerDataTableGatewayMock = new Mock&lt;ICustomerDataTableGateway&gt;();
+
+            var customerRepository = new CustomerRepository(customerDataTableGatewayMock.Object);
+
+            var customer = new Customer()
+            {
+                Id = 100,
+                FirstName = "firstname",
+                LastName = "lastname"
+            };
+
+            customer = customerRepository.Save(customer);
+
+            customerDataTableGatewayMock.Verify(g =&gt; g.Update(
+                It.Is&lt;CustomerDto&gt;(d =&gt;
+                    d.Id == 100
+                    && d.FirstName == "firstname"
+                    && d.LastName == "lastname")));
+        }
+
+    }</code></pre>
     </div>
 
     <div class="col-md-12">
         <h3 id="UnitTestWithStub">Customer Repository Test with Stub</h3>
-            <pre><code>public class CustomerDataTableGatewayStub : ICustomerDataTableGateway
-{
-    public int Insert(CustomerDto dto)
+            <pre><code>    public class CustomerDataTableGatewayStub : ICustomerDataTableGateway
     {
-        return 0;
-    }
-
-    public void Update(CustomerDto dto)
-    {
-    }
-
-    public CustomerDto Get(int customerId)
-    {
-        return null;
-    }
-
-    // **
-
-    public bool GetAllWasCalled { get; private set; }
-
-    public CustomerDto[] GetAll()
-    {
-        GetAllWasCalled = true;
-
-        var customerDto0 = new CustomerDto()
+        public int Insert(CustomerDto dto)
         {
-            Id = 100,
-            FirstName = "firstname0",
-            LastName = "lastname0"
-        };
+            return 0;
+        }
 
-        var customerDto1 = new CustomerDto()
+        public void Update(CustomerDto dto)
         {
-            Id = 101,
-            FirstName = "firstname1",
-            LastName = "lastname1"
-        };
+        }
 
-        var customerDto2 = new CustomerDto()
+        public CustomerDto Get(int customerId)
         {
-            Id = 102,
-            FirstName = "firstname2",
-            LastName = "lastname2"
-        };
+            return null;
+        }
 
-        return new[]
+        // **
+
+        public bool GetAllWasCalled { get; private set; }
+
+        public CustomerDto[] GetAll()
         {
-            customerDto0,
-            customerDto1,
-            customerDto2
-        };
-    }
-}
+            GetAllWasCalled = true;
 
-public class CustomerRepositoryTests3
-{
-    [Fact]
-    public void GetAllShouldReturnTheExpectedCustomerSet()
-    {
-        var customerDataTableGatewayStub = new CustomerDataTableGatewayStub();
-
-        var customerRepository = new CustomerRepository(customerDataTableGatewayStub);
-
-        var customers = customerRepository.GetAll();
-
-        Assert.True(customerDataTableGatewayStub.GetAllWasCalled);
-
-        Assert.Equal(3, customers.Length);
-
-        Assert.Equal(100, customers[0].GetIdOrDefault(0));
-        Assert.Equal("firstname0", customers[0].FirstName);
-        Assert.Equal("lastname0", customers[0].LastName);
-
-        Assert.Equal(101, customers[1].GetIdOrDefault(0));
-        Assert.Equal("firstname1", customers[1].FirstName);
-        Assert.Equal("lastname1", customers[1].LastName);
-
-        Assert.Equal(102, customers[2].GetIdOrDefault(0));
-        Assert.Equal("firstname2", customers[2].FirstName);
-        Assert.Equal("lastname2", customers[2].LastName);
-    }
-}</code></pre>
-    </div>
-
-    <div class="col-md-12">
-        <h3 id="UnitTestWithFake">Customer Repository Test with Fake</h3>
-            <pre><code>public class CustomerDataTableGatewayFake : ICustomerDataTableGateway
-{
-    private readonly List<CustomerDto> _customerDtos;
-
-    private int _nextCustomerId;
-
-    public CustomerDataTableGatewayFake()
-    {
-        _customerDtos = new List<CustomerDto>();
-        _nextCustomerId = 1;
-    }
-
-    public int Insert(CustomerDto dto)
-    {
-        _customerDtos.Add(dto);
-
-        return _nextCustomerId++;
-    }
-
-    public void Update(CustomerDto dto)
-    {
-        var savedDto = _customerDtos.FirstOrDefault(d => d.Id == dto.Id);
-
-        if (savedDto == null)
-            return;
-
-        savedDto.FirstName = dto.FirstName;
-        savedDto.LastName = dto.LastName;
-    }
-
-    public CustomerDto Get(int customerId)
-    {
-        return _customerDtos
-            .FirstOrDefault(d => d.Id == customerId);
-    }
-
-    public CustomerDto[] GetAll()
-    {
-        return _customerDtos.ToArray();
-    }
-
-    public class CustomerRepositoryTests4
-    {
-        [Fact]
-        public void GetAllShouldReturnTheExpectedCustomerSet()
-        {
-            var customerDataTableGatewayFake = new CustomerDataTableGatewayFake();
-
-            customerDataTableGatewayFake.Insert(new CustomerDto()
+            var customerDto0 = new CustomerDto()
             {
                 Id = 100,
                 FirstName = "firstname0",
                 LastName = "lastname0"
-            });
+            };
 
-            customerDataTableGatewayFake.Insert(new CustomerDto()
+            var customerDto1 = new CustomerDto()
             {
                 Id = 101,
                 FirstName = "firstname1",
                 LastName = "lastname1"
-            });
+            };
 
-            customerDataTableGatewayFake.Insert(new CustomerDto()
+            var customerDto2 = new CustomerDto()
             {
                 Id = 102,
                 FirstName = "firstname2",
                 LastName = "lastname2"
-            });
+            };
 
-            var customerRepository = new CustomerRepository(customerDataTableGatewayFake);
+            return new[]
+            {
+                customerDto0,
+                customerDto1,
+                customerDto2
+            };
+        }
+    }
+
+    public class CustomerRepositoryTests3
+    {
+        [Fact]
+        public void GetAllShouldReturnTheExpectedCustomerSet()
+        {
+            var customerDataTableGatewayStub = new CustomerDataTableGatewayStub();
+
+            var customerRepository = new CustomerRepository(customerDataTableGatewayStub);
+
+            var customers = customerRepository.GetAll();
+
+            Assert.True(customerDataTableGatewayStub.GetAllWasCalled);
+
+            Assert.Equal(3, customers.Length);
+
+            Assert.Equal(100, customers[0].GetIdOrZero());
+            Assert.Equal("firstname0", customers[0].FirstName);
+            Assert.Equal("lastname0", customers[0].LastName);
+
+            Assert.Equal(101, customers[1].GetIdOrZero());
+            Assert.Equal("firstname1", customers[1].FirstName);
+            Assert.Equal("lastname1", customers[1].LastName);
+
+            Assert.Equal(102, customers[2].GetIdOrZero());
+            Assert.Equal("firstname2", customers[2].FirstName);
+            Assert.Equal("lastname2", customers[2].LastName);
+        }
+
+        [Fact]
+        public void GetAllShouldReturnTheExpectedCustomerSetWithFramework()
+        {
+            var customerDataTableGatewayMock = new Mock&lt;ICustomerDataTableGateway&gt;();
+
+            var customerDto0 = new CustomerDto()
+            {
+                Id = 100,
+                FirstName = "firstname0",
+                LastName = "lastname0"
+            };
+
+            var customerDto1 = new CustomerDto()
+            {
+                Id = 101,
+                FirstName = "firstname1",
+                LastName = "lastname1"
+            };
+
+            var customerDto2 = new CustomerDto()
+            {
+                Id = 102,
+                FirstName = "firstname2",
+                LastName = "lastname2"
+            };
+
+            var customerDtos = new[]
+            {
+                customerDto0,
+                customerDto1,
+                customerDto2
+            };
+
+            customerDataTableGatewayMock
+                .Setup(g =&gt; g.GetAll())
+                .Returns(customerDtos);
+
+            var customerRepository = new CustomerRepository(customerDataTableGatewayMock.Object);
 
             var customers = customerRepository.GetAll();
 
             Assert.Equal(3, customers.Length);
 
-            Assert.Equal(100, customers[0].GetIdOrDefault(0));
+            Assert.Equal(100, customers[0].GetIdOrZero());
             Assert.Equal("firstname0", customers[0].FirstName);
             Assert.Equal("lastname0", customers[0].LastName);
 
-            Assert.Equal(101, customers[1].GetIdOrDefault(0));
+            Assert.Equal(101, customers[1].GetIdOrZero());
             Assert.Equal("firstname1", customers[1].FirstName);
             Assert.Equal("lastname1", customers[1].LastName);
 
-            Assert.Equal(102, customers[2].GetIdOrDefault(0));
+            Assert.Equal(102, customers[2].GetIdOrZero());
             Assert.Equal("firstname2", customers[2].FirstName);
             Assert.Equal("lastname2", customers[2].LastName);
         }
-    }
-}</code></pre>
+
+    }</code></pre>
     </div>
 
     <div class="col-md-12">
-        <h3 id="UnitTestWithMock">Customer Repository Test with Mock</h3>
-            <pre><code>public class CustomerDataTableGatewayMock : ICustomerDataTableGateway
-{
-    private readonly List<string> _eventStream;
-    private readonly CustomerDataTableGatewayFake _customerDataTableGatewayFake;
-
-    public CustomerDataTableGatewayMock()
+        <h3 id="UnitTestWithFake">Customer Repository Test with Fake</h3>
+            <pre><code>    public class CustomerDataTableGatewayFake : ICustomerDataTableGateway
     {
-        _customerDataTableGatewayFake = new CustomerDataTableGatewayFake();
+        private readonly List&lt;CustomerDto&gt; _customerDtos;
 
-        _eventStream = new List<string>();
-    }
+        private int _nextCustomerId;
 
-    public int Insert(CustomerDto dto)
-    {
-        var e = string.Format("Insert Called - {0}", GetSummary(dto));
-        _eventStream.Add(e);
-
-        return _customerDataTableGatewayFake.Insert(dto);
-    }
-
-    public void Update(CustomerDto dto)
-    {
-        var e = string.Format("Update Called - {0}", GetSummary(dto));
-        _eventStream.Add(e);
-
-        _customerDataTableGatewayFake.Update(dto);
-    }
-
-    public CustomerDto Get(int customerId)
-    {
-        var e = string.Format("Get Called - CustomerId: {0}", customerId);
-        _eventStream.Add(e);
-
-        return _customerDataTableGatewayFake.Get(customerId);
-    }
-
-    public CustomerDto[] GetAll()
-    {
-        var e = "Get All Called";
-        _eventStream.Add(e);
-
-        return _customerDataTableGatewayFake.GetAll();
-    }
-
-    public static string GetSummary(
-        CustomerDto dto)
-    {
-        return string.Format(
-            "'{0} - {1}, {2}'",
-            dto.Id,
-            dto.LastName,
-            dto.FirstName);
-    }
-
-    public string[] GetAllEvents()
-    {
-        return _eventStream.ToArray();
-    }
-}
-
-public class CustomerRepositoryTests5
-{
-    [Fact]
-    public void ShouldReturnTheExpectedCalls()
-    {
-        var customerDataTableGatewayMock = new CustomerDataTableGatewayMock();
-
-        var customerRepository = new CustomerRepository(customerDataTableGatewayMock);
-
-        var customer = new Customer()
+        public CustomerDataTableGatewayFake()
         {
-            FirstName = "John",
-            LastName = "Doe"
-        };
+            _customerDtos = new List&lt;CustomerDto&gt;();
+            _nextCustomerId = 1;
+        }
 
-        customer = customerRepository.Save(customer);
+        public int Insert(CustomerDto dto)
+        {
+            _customerDtos.Add(dto);
 
-        customer.FirstName = "Bob";
+            var newCustomerId = _nextCustomerId++;
 
-        customer = customerRepository.Save(customer);
+            dto.Id = newCustomerId;
 
-        var savedCustomer = customerRepository.Get(customer.GetIdOrDefault(0));
+            return newCustomerId;
+        }
 
-        var events = customerDataTableGatewayMock.GetAllEvents();
+        public void Update(CustomerDto dto)
+        {
+            var savedDto = _customerDtos.FirstOrDefault(d =&gt; d.Id == dto.Id);
 
-        Assert.Equal("Insert Called - '0 - Doe, John'", events[0]);
-        Assert.Equal("Update Called - '1 - Doe, Bob'", events[1]);
-        Assert.Equal("Get Called - CustomerId: " + savedCustomer.Id, events[2]);
+            if (savedDto == null)
+                return;
+
+            savedDto.FirstName = dto.FirstName;
+            savedDto.LastName = dto.LastName;
+        }
+
+        public CustomerDto Get(int customerId)
+        {
+            return _customerDtos
+                .FirstOrDefault(d =&gt; d.Id == customerId);
+        }
+
+        public CustomerDto[] GetAll()
+        {
+            return _customerDtos.ToArray();
+        }
+
+        public class CustomerRepositoryTests4
+        {
+            [Fact]
+            public void GetAllShouldReturnTheExpectedCustomerSet()
+            {
+                var customerDataTableGatewayFake = new CustomerDataTableGatewayFake();
+
+                customerDataTableGatewayFake.Insert(new CustomerDto()
+                {
+                    Id = 100,
+                    FirstName = "firstname0",
+                    LastName = "lastname0"
+                });
+
+                customerDataTableGatewayFake.Insert(new CustomerDto()
+                {
+                    Id = 101,
+                    FirstName = "firstname1",
+                    LastName = "lastname1"
+                });
+
+                customerDataTableGatewayFake.Insert(new CustomerDto()
+                {
+                    Id = 102,
+                    FirstName = "firstname2",
+                    LastName = "lastname2"
+                });
+
+                var customerRepository = new CustomerRepository(customerDataTableGatewayFake);
+
+                var customers = customerRepository.GetAll();
+
+                Assert.Equal(3, customers.Length);
+
+                Assert.Equal(100, customers[0].GetIdOrZero());
+                Assert.Equal("firstname0", customers[0].FirstName);
+                Assert.Equal("lastname0", customers[0].LastName);
+
+                Assert.Equal(101, customers[1].GetIdOrZero());
+                Assert.Equal("firstname1", customers[1].FirstName);
+                Assert.Equal("lastname1", customers[1].LastName);
+
+                Assert.Equal(102, customers[2].GetIdOrZero());
+                Assert.Equal("firstname2", customers[2].FirstName);
+                Assert.Equal("lastname2", customers[2].LastName);
+            }
+        }
+    }</code></pre>
+    </div>
+
+    <div class="col-md-12">
+        <h3 id="UnitTestWithMock">Customer Repository Test with True Mock</h3>
+            <pre><code>    public class CustomerDataTableGatewayTrueMock : ICustomerDataTableGateway
+    {
+        private readonly List&lt;string&gt; _eventStream;
+        private readonly CustomerDataTableGatewayFake _customerDataTableGatewayFake;
+
+        public CustomerDataTableGatewayTrueMock()
+        {
+            _customerDataTableGatewayFake = new CustomerDataTableGatewayFake();
+
+            _eventStream = new List&lt;string&gt;();
+        }
+
+        public int Insert(CustomerDto dto)
+        {
+            var e = string.Format("Insert Called - {0}", GetSummary(dto));
+            _eventStream.Add(e);
+
+            return _customerDataTableGatewayFake.Insert(dto);
+        }
+
+        public void Update(CustomerDto dto)
+        {
+            var e = string.Format("Update Called - {0}", GetSummary(dto));
+            _eventStream.Add(e);
+
+            _customerDataTableGatewayFake.Update(dto);
+        }
+
+        public CustomerDto Get(int customerId)
+        {
+            var e = string.Format("Get Called - CustomerId: {0}", customerId);
+            _eventStream.Add(e);
+
+            return _customerDataTableGatewayFake.Get(customerId);
+        }
+
+        public CustomerDto[] GetAll()
+        {
+            var e = "Get All Called";
+            _eventStream.Add(e);
+
+            return _customerDataTableGatewayFake.GetAll();
+        }
+
+        public static string GetSummary(
+            CustomerDto dto)
+        {
+            return string.Format(
+                "'{0} - {1}, {2}'",
+                dto.Id,
+                dto.LastName,
+                dto.FirstName);
+        }
+
+        public string[] GetAllEvents()
+        {
+            return _eventStream.ToArray();
+        }
     }
 
-}</code></pre>
+    public class CustomerRepositoryTests5
+    {
+        [Fact]
+        public void ShouldReturnTheExpectedCalls()
+        {
+            var customerDataTableGatewayMock = new CustomerDataTableGatewayTrueMock();
+
+            var customerRepository = new CustomerRepository(customerDataTableGatewayMock);
+
+            var customer = new Customer()
+            {
+                FirstName = "John",
+                LastName = "Doe"
+            };
+
+            customer = customerRepository.Save(customer);
+
+            customer.FirstName = "Bob";
+
+            customer = customerRepository.Save(customer);
+
+            var savedCustomer = customerRepository.Get(customer.GetIdOrZero());
+
+            var events = customerDataTableGatewayMock.GetAllEvents();
+
+            Assert.Equal("Insert Called - '0 - Doe, John'", events[0]);
+            Assert.Equal("Update Called - '1 - Doe, Bob'", events[1]);
+            Assert.Equal("Get Called - CustomerId: " + savedCustomer.GetIdOrZero(), events[2]);
+        }
+    }
+</code></pre>
     </div>
 
 </div>
