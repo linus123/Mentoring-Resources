@@ -58,7 +58,6 @@ namespace Tests.ObjectOrientedProgramming
 
             var consoleSystemLog = new ConsoleSystemLog();
             DoSomeComplicatedBusinessStuff(consoleSystemLog);
-
             var noOperationSystemLog = new NoOperationSystemLog();
             DoSomeComplicatedBusinessStuff(noOperationSystemLog);
 
