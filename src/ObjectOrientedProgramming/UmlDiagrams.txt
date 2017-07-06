@@ -1,6 +1,31 @@
 http://www.plantuml.com/plantuml/uml
 
 **********************
+Customer Class Example
+**********************
+
+@startuml
+class Address {
++Street1
++Street2
++City
++State
++PostalCode
+string GetPrintableAddress()
+}
+
+
+class Customer {
++CustomerId
++FirstName
++LastName
++BillingAddress : Address
++ShippingAddress : Address
+string GetFullName()
+}
+@enduml
+
+**********************
 Interface Example
 **********************
 
