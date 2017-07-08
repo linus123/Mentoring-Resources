@@ -69,8 +69,8 @@
 						<h3>The Patterns</h3>
 						<ul>
 							<li>Transaction Script</li>
-							<li>Domain Model</li>
 							<li>Table Module</li>
+							<li>Domain Model</li>
 							<li>Service Layer *</li>
 						</ul>
 					</section>
@@ -131,6 +131,43 @@
 
 				<section>
 					<p class="SmallTopTitle"><small>Domain Logic Pattern</small></p>
+					<h4>Table Module</h4>
+
+					<section>
+						<p>A single instance that handles the business logic for all rows in a database table or view.</p>
+					</section>
+
+					<section>
+						<h3>Works well when</h3>
+						<ul>
+							<li>problem is aligned to the data source</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Pros</h3>
+						<ul>
+							<li>Medium Complexity</li>
+							<li>Ships with Most ORMs</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Cons</h3>
+						<ul>
+							<li>Only Works for Databases</li>
+							<li>Couples Code to Database</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#TableModuleExample" target="_blank">Example</a></h3>
+					</section>
+
+				</section>
+
+				<section>
+					<p class="SmallTopTitle"><small>Domain Logic Pattern</small></p>
 					<h4>Domain Model</h4>
 
 					<section>
@@ -164,43 +201,6 @@
 
 					<section>
 						<h3><a href="CodeSamples.html#DomainModelExample" target="_blank">Example</a></h3>
-					</section>
-
-				</section>
-
-				<section>
-					<p class="SmallTopTitle"><small>Domain Logic Pattern</small></p>
-					<h4>Table Module</h4>
-
-					<section>
-						<p>A single instance that handles the business logic for all rows in a database table or view.</p>
-					</section>
-
-					<section>
-						<h3>Works well when</h3>
-						<ul>
-							<li>problem is aligned to the data source</li>
-						</ul>
-					</section>
-
-					<section>
-						<h3>Pros</h3>
-						<ul>
-							<li>Medium Complexity</li>
-							<li>Ships with Most ORMs</li>
-						</ul>
-					</section>
-
-					<section>
-						<h3>Cons</h3>
-						<ul>
-							<li>Only Works for Databases</li>
-							<li>Couples Code to Database</li>
-						</ul>
-					</section>
-
-					<section>
-						<h3><a href="CodeSamples.html#TableModuleExample" target="_blank">Example</a></h3>
 					</section>
 
 				</section>
