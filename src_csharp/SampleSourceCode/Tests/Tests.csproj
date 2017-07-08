@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="ObjectOrientedProgramming\SystemLog.cs" />
     <Compile Include="PatternsOfEnterpriseApplicationArchitecture\DomainLogicPatterns\OrderReportDomainModeling.cs" />
+    <Compile Include="PatternsOfEnterpriseApplicationArchitecture\DomainLogicPatterns\OrderReportTableModule.cs" />
     <Compile Include="PatternsOfEnterpriseApplicationArchitecture\DomainLogicPatterns\OrderReportTransactionScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDoubles\CustomerDataTableGatewayDummy.cs" />

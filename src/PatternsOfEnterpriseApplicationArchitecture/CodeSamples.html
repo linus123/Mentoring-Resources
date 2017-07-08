@@ -167,42 +167,103 @@ end</code></pre>
 
         <div class="col-md-12">
             <h3 id="TableModuleExample">Table Module Example</h3>
-            <pre><code>public class PortfolioTableModule
+            <pre><code>public class OrderReportTableModule
 {
-    private readonly DataSet _dataSet;
-
-    public PortfolioTableModule(
-        DataSet dataSet)
+    public class OrderTableModule
     {
-        _dataSet = dataSet;
-    }
+        private readonly DataSet _dataSet;
 
-    public DataRow this[int number]
-    {
-        get
+        public OrderTableModule(DataSet dataSet)
         {
-            var filter = string.Format("Number = {0}", number);
-
-            return _dataSet.Tables["Portfolio"].Select(filter)[0];
+            _dataSet = dataSet;
         }
+
+        public DataRowCollection GetAll()
+        {
+            return _dataSet.Tables["Order"].Rows;
+        }
+
+        private DataTable LineItems
+        {
+            get { return _dataSet.Tables["LineItem"]; }
+        }
+
+        public decimal CalculateOrderTotal(
+            Guid orderId)
+        {
+            var orderTotal = 0m;
+
+            var lineItemsForOrder = LineItems.Select("OrderId = " + orderId);
+
+            foreach (DataRow lineItem in lineItemsForOrder)
+            {
+                var unitPrice = Convert.ToDecimal(lineItem["UnitPrice"]);
+                var quanity = Convert.ToInt32(lineItem["Quantity"]);
+
+                orderTotal += unitPrice * quanity;
+            }
+
+            return orderTotal;
+        }
+
     }
 
-    public int[] GetBenchmarkNumbers(
-        int portfolioNumber)
+    public void PrintOrdersWithTotals()
     {
-        var filter = string.Format("Portfolio = {0}", portfolioNumber);
+        var ordersDataSet = GetOrderTableModule();
 
-        var dataRows = _dataSet.Tables["Benchmark"].Select(filter);
-
-        return dataRows.Select(r => (int)r["Number"]).ToArray();
+        PrintReportToConsole(ordersDataSet);
     }
 
-    public string GetDisplayName(
-        int portfolioNumber)
+    private OrderTableModule GetOrderTableModule()
     {
-        var dataRow = this[portfolioNumber];
+        var connectionString = "[My Connection String]";
 
-        return string.Format("{0} - {1}", dataRow["Number"], dataRow["Name"]);
+        var allOrdersSql = @"
+SELECT
+    *
+FROM
+    Order
+
+SELECT
+    *
+FROM
+    LineItem";
+
+        var ordersDataSet = new DataSet();
+
+        using (var connection = new SqlConnection(connectionString))
+        {
+            var command = new SqlCommand(allOrdersSql, connection);
+
+            var sqlDataAdapter = new SqlDataAdapter(command);
+
+            connection.Open();
+            sqlDataAdapter.Fill(ordersDataSet);
+            connection.Close();
+        }
+
+        return new OrderTableModule(ordersDataSet);
+    }
+
+    private void PrintReportToConsole(OrderTableModule orderTableModule)
+    {
+        Console.WriteLine("Date\tName\tTotal");
+
+        var orders = orderTableModule.GetAll();
+
+        foreach (DataRow orderDataRow in orders)
+        {
+            var orderTotal = orderTableModule.CalculateOrderTotal((Guid)orderDataRow["OrderId"]);
+            var orderDate = Convert.ToDateTime(orderDataRow["OrderDate"]).ToShortDateString();
+            var customerName = orderDataRow["CustomerName"].ToString();
+
+            Console.WriteLine(
+                "'{0}'\t'{1}'\t{2}",
+                orderDate,
+                customerName,
+                orderTotal);
+        }
     }
 }</code></pre>
         </div>
