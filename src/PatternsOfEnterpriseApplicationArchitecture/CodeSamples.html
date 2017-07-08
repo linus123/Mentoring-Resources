@@ -39,40 +39,79 @@
     
         <div class="col-md-12">
             <h3 id="TransactionScriptCSharp">Transaction Script Example - C#</h3>
-            <pre><code>static void Main()
+            <pre><code>public class OrderReportTransactionScript
 {
-    string connectionString = "[My Connection String]";
-
-    string queryString = "SELECT ProductID, UnitPrice, ProductName from dbo.products "
-            + "WHERE UnitPrice > @pricePoint "
-            + "ORDER BY UnitPrice DESC;";
-
-    int paramValue = 5;
-
-    using (var connection = new SqlConnection(connectionString))
+    public void PrintOrdersWithTotals()
     {
-        var command = new SqlCommand(queryString, connection);
-        command.Parameters.AddWithValue("@pricePoint", paramValue);
+        var ordersDataSet = GetAllOrders();
 
-        try
+        PrintReportToConsole(ordersDataSet);
+    }
+
+    private DataSet GetAllOrders()
+    {
+        var connectionString = "[My Connection String]";
+
+        var allOrdersSql = @"
+SELECT
+    *
+FROM
+    Order
+
+SELECT
+    *
+FROM
+    LineItem";
+
+        var ordersDataSet = new DataSet();
+
+        using (var connection = new SqlConnection(connectionString))
         {
+            var command = new SqlCommand(allOrdersSql, connection);
+
+            var sqlDataAdapter = new SqlDataAdapter(command);
+
             connection.Open();
-            var reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                Console.WriteLine("\t{0}\t{1}\t{2}",
-                    reader[0], reader[1], reader[2]);
-            }
-
-            reader.Close();
+            sqlDataAdapter.Fill(ordersDataSet);
+            connection.Close();
         }
-        catch (Exception ex)
+
+        return ordersDataSet;
+    }
+
+    private void PrintReportToConsole(DataSet ordersDataSet)
+    {
+        Console.WriteLine("Date\tName\tTotal");
+
+        foreach (DataRow order in ordersDataSet.Tables[0].Rows)
         {
-            Console.WriteLine(ex.Message);
+            var orderTotal = CalculateOrderTotal(order, ordersDataSet.Tables[1]);
+            var orderDate = Convert.ToDateTime(order["OrderDate"]).ToShortDateString();
+            var customerName = order["CustomerName"].ToString();
+
+            Console.WriteLine(
+                "'{0}'\t'{1}'\t{2}",
+                orderDate,
+                customerName,
+                orderTotal);
+        }
+    }
+
+    private decimal CalculateOrderTotal(DataRow order, DataTable lineItems)
+    {
+        var orderTotal = 0m;
+
+        var lineItemsForOrder = lineItems.Select("OrderId = " + order["OrderId"]);
+
+        foreach (DataRow lineItem in lineItemsForOrder)
+        {
+            var unitPrice = Convert.ToDecimal(lineItem["UnitPrice"]);
+            var quanity = Convert.ToInt32(lineItem["Quantity"]);
+
+            orderTotal += unitPrice * quanity;
         }
 
-        Console.ReadLine();
+        return orderTotal;
     }
 }</code></pre>
         </div>
