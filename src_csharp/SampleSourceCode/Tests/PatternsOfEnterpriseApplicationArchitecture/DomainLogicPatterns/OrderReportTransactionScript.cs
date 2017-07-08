@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Tests.PatternsOfEnterpriseApplicationArchitecture.DomainModeling
+namespace Tests.PatternsOfEnterpriseApplicationArchitecture.DomainLogicPatterns
 {
     public class OrderReportTransactionScript
     {
