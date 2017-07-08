@@ -1,0 +1,23 @@
+http://www.plantuml.com/plantuml/uml
+
+**********************
+Order Object Diagram
+**********************
+
+@startuml
+object Order{
++ OrderId : Guid
++ OrderDate : DateTime
++ CustomerName : string
+}
+
+object LineItem{
++ ProductId : int
++ Name : string
++ Quantity : int
++ UnitPrice : Money
+}
+
+Order "1" --> "*" LineItem
+@enduml
+
