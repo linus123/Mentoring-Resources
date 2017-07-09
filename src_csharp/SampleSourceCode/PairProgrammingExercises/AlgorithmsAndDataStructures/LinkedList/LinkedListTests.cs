@@ -111,7 +111,28 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
             {
                 enumerator.MoveNext();
             });
+        }
 
+        [Theory]
+        [InlineData(1, 2, 123)]
+        [InlineData(2, 10, 3)]
+        [InlineData(3, 44, 3)]
+        public void ContainsShouldReturnTrueWhenItemIsFound(
+            int value1,
+            int value2,
+            int value3)
+        {
+            var linkedList = new LinkedList();
+
+            linkedList.Add(value1);
+            linkedList.Add(value2);
+            linkedList.Add(value3);
+
+            linkedList.Contains(value1).Should().BeTrue();
+            linkedList.Contains(value2).Should().BeTrue();
+            linkedList.Contains(value3).Should().BeTrue();
+            linkedList.Contains(-80).Should().BeFalse();
+            linkedList.Contains(-20).Should().BeFalse();
 
         }
 

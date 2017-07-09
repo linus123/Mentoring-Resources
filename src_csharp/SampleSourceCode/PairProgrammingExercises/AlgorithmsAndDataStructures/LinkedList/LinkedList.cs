@@ -85,7 +85,19 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
         public bool Contains(int item)
         {
-            throw new System.NotImplementedException();
+            bool isFound = false;
+
+            ForEachNode(node =>
+            {
+                if (node.Value == item)
+                {
+                    isFound = true;
+                    return false;
+                }
+                return true;
+            });
+
+            return isFound;
         }
 
         public void CopyTo(int[] array, int arrayIndex)
