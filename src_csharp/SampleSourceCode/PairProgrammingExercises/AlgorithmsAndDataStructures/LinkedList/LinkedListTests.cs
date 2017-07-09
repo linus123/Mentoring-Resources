@@ -46,7 +46,7 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
         [InlineData(1, 2)]
         [InlineData(2, 10)]
         [InlineData(3, 44)]
-        public void ShouldHandleTwoValue(
+        public void ShouldHandleTwoValues(
             int value1,
             int value2)
         {
@@ -64,6 +64,36 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
             enumerator.MoveNext();
             enumerator.Current.Should().Be(value2);
+        }
+
+        [Theory]
+        [InlineData(1, 2, 123)]
+        [InlineData(2, 10, 3)]
+        [InlineData(3, 44, 3)]
+        public void ShouldHandleThreeValues(
+            int value1,
+            int value2,
+            int value3)
+        {
+            var linkedList = new LinkedList();
+
+            linkedList.Add(value1);
+            linkedList.Add(value2);
+            linkedList.Add(value3);
+
+            linkedList.Count.Should().Be(3);
+
+            var enumerator = linkedList.GetEnumerator();
+
+            enumerator.MoveNext();
+            enumerator.Current.Should().Be(value1);
+
+            enumerator.MoveNext();
+            enumerator.Current.Should().Be(value2);
+
+            enumerator.MoveNext();
+            enumerator.Current.Should().Be(value3);
+
         }
 
     }

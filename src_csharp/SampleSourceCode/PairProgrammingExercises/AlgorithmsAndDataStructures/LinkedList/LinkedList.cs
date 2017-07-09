@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
@@ -17,15 +18,12 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
         public IEnumerator<int> GetEnumerator()
         {
-            if (HasAnyNodes)
-            {
-                var currentNode = _head;
+            var currentNode = _head;
 
-                while (currentNode != null)
-                {
-                    yield return currentNode.Value;
-                    currentNode = currentNode.Next;
-                }
+            while (currentNode != null)
+            {
+                yield return currentNode.Value;
+                currentNode = currentNode.Next;
             }
         }
 
@@ -36,17 +34,20 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
         private Node GetLastNode()
         {
-            var currentNode = _head;
+            Node lastNode = null;
 
-            while (currentNode != null)
+            ForEachNode(node =>
             {
-                if (currentNode.Next == null)
-                    return currentNode;
+                if (node.Next == null)
+                {
+                    lastNode = node;
+                    return false;
+                }
 
-                currentNode = currentNode.Next;
-            }
+                return true;
+            });
 
-            return null;
+            return lastNode;
         }
 
         public void Add(int item)
@@ -100,6 +101,23 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
         }
         public bool IsReadOnly { get; }
+
+        private void ForEachNode(
+            Func<Node, bool> actionWithContinue)
+        {
+            var currentNode = _head;
+            var shouldContinue = true;
+
+            while ((currentNode != null) && (shouldContinue))
+            {
+                if (currentNode.Next == null)
+                {
+                    shouldContinue = actionWithContinue(currentNode);
+                }
+
+                currentNode = currentNode.Next;
+            }
+        }
 
         private class Node
         {
