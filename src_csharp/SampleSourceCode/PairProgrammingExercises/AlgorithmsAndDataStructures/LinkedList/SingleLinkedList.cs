@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 {
-    public class LinkedList : ICollection<int>
+    public class SingleLinkedList : ICollection<int>
     {
         private int _itemCount;
 
         private Node _head;
 
-        public LinkedList()
+        public SingleLinkedList()
         {
             _itemCount = 0;
             _head = null;
@@ -116,7 +116,35 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
         public bool Remove(int item)
         {
-            throw new System.NotImplementedException();
+            Node previousNode = null;
+            Node currentNode = null;
+
+            ForEachNode(node =>
+            {
+                currentNode = node;
+
+                if (currentNode.Value == item)
+                {
+                    return false;
+                }
+
+                previousNode = currentNode;
+                currentNode = currentNode.Next;
+
+                return true;
+            });
+
+            if (currentNode == null)
+                return false;
+
+            if (previousNode == null)
+                _head = currentNode.Next;
+            else
+                previousNode.Next = currentNode.Next;
+
+            _itemCount--;
+
+            return true;
         }
 
         public int Count

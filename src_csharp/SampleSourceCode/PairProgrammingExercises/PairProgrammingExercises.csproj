@@ -58,8 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgorithmsAndDataStructures\LinkedList\LinkedList.cs" />
-    <Compile Include="AlgorithmsAndDataStructures\LinkedList\LinkedListTests.cs" />
+    <Compile Include="AlgorithmsAndDataStructures\LinkedList\SingleLinkedList.cs" />
+    <Compile Include="AlgorithmsAndDataStructures\LinkedList\SingleLinkedListTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
