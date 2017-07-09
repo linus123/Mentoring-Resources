@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -36,10 +38,10 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
             linkedList.Count.Should().Be(1);
 
-            var enumerator = linkedList.GetEnumerator();
+            var array = linkedList.ToArray();
 
-            enumerator.MoveNext();
-            enumerator.Current.Should().Be(value1);
+            array.Length.Should().Be(1);
+            array[0].Should().Be(value1);
         }
 
         [Theory]
@@ -57,13 +59,11 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
             linkedList.Count.Should().Be(2);
 
-            var enumerator = linkedList.GetEnumerator();
+            var array = linkedList.ToArray();
+            array.Length.Should().Be(2);
 
-            enumerator.MoveNext();
-            enumerator.Current.Should().Be(value1);
-
-            enumerator.MoveNext();
-            enumerator.Current.Should().Be(value2);
+            array[0].Should().Be(value1);
+            array[1].Should().Be(value2);
         }
 
         [Theory]
@@ -83,18 +83,38 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
             linkedList.Count.Should().Be(3);
 
-            var enumerator = linkedList.GetEnumerator();
+            var array = linkedList.ToArray();
+            array.Length.Should().Be(3);
 
-            enumerator.MoveNext();
-            enumerator.Current.Should().Be(value1);
-
-            enumerator.MoveNext();
-            enumerator.Current.Should().Be(value2);
-
-            enumerator.MoveNext();
-            enumerator.Current.Should().Be(value3);
+            array[0].Should().Be(value1);
+            array[1].Should().Be(value2);
+            array[2].Should().Be(value3);
 
         }
+
+        [Fact]
+        public void ClearShouldRemoveAllItems()
+        {
+            var linkedList = new LinkedList();
+
+            linkedList.Add(1);
+            linkedList.Add(2);
+            linkedList.Add(3);
+
+            linkedList.Clear();
+
+            linkedList.Count.Should().Be(0);
+
+            var enumerator = linkedList.GetEnumerator();
+
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                enumerator.MoveNext();
+            });
+
+
+        }
+
 
     }
 }

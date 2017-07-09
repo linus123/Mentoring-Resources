@@ -25,6 +25,8 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
                 yield return currentNode.Value;
                 currentNode = currentNode.Next;
             }
+
+            throw new InvalidOperationException();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -77,7 +79,8 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
         public void Clear()
         {
-            throw new System.NotImplementedException();
+            _itemCount = 0;
+            _head = null;
         }
 
         public bool Contains(int item)
@@ -87,7 +90,16 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
         public void CopyTo(int[] array, int arrayIndex)
         {
-            throw new System.NotImplementedException();
+            var indexCount = 0;
+
+            ForEachNode(node =>
+            {
+                if (indexCount >= arrayIndex)
+                    array[indexCount] = node.Value;
+
+                indexCount++;
+                return true;
+            });
         }
 
         public bool Remove(int item)
@@ -100,7 +112,11 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
             get { return _itemCount; }
 
         }
-        public bool IsReadOnly { get; }
+
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
 
         private void ForEachNode(
             Func<Node, bool> actionWithContinue)
@@ -110,11 +126,7 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
 
             while ((currentNode != null) && (shouldContinue))
             {
-                if (currentNode.Next == null)
-                {
-                    shouldContinue = actionWithContinue(currentNode);
-                }
-
+                shouldContinue = actionWithContinue(currentNode);
                 currentNode = currentNode.Next;
             }
         }
