@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Tests.PatternsOfEnterpriseApplicationArchitecture.DomainLogicPatterns
+namespace CodeExamples.PatternsOfEnterpriseApplicationArchitecture.DomainLogicPatterns
 {
     public class OrderReportTableModule
     {

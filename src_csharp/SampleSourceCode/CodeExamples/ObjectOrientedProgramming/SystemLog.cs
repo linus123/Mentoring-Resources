@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Tests.ObjectOrientedProgramming
+namespace CodeExamples.ObjectOrientedProgramming
 {
     public interface ISystemLog
     {

@@ -2,7 +2,7 @@
 using System.Linq;
 using Xunit;
 
-namespace Tests.TestDoubles
+namespace CodeExamples.TestDoubles
 {
     public class CustomerDataTableGatewayFake : ICustomerDataTableGateway
     {

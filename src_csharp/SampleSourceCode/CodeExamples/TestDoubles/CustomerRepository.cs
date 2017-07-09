@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Tests.TestDoubles
+namespace CodeExamples.TestDoubles
 {
     public class CustomerRepository
     {

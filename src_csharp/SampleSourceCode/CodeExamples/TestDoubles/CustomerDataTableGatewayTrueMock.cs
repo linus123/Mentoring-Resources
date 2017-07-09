@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Xunit;
 
-namespace Tests.TestDoubles
+namespace CodeExamples.TestDoubles
 {
     public class CustomerDataTableGatewayTrueMock : ICustomerDataTableGateway
     {

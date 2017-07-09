@@ -1,7 +1,7 @@
 ﻿using Moq;
 using Xunit;
 
-namespace Tests.TestDoubles
+namespace CodeExamples.TestDoubles
 {
     public class CustomerDataTableGatewayDummy : ICustomerDataTableGateway
     {
