@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
 
@@ -24,67 +23,48 @@ namespace PairProgrammingExercises.AlgorithmsAndDataStructures.LinkedList
             linkedList.IsReadOnly.Should().BeFalse();
         }
 
-        [Fact]
-        public void AddShouldSetTheCountTo1()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void ShouldHandleSingleValue(
+            int value1)
         {
             var linkedList = new LinkedList();
 
-            linkedList.Add(1);
+            linkedList.Add(value1);
 
             linkedList.Count.Should().Be(1);
+
+            var enumerator = linkedList.GetEnumerator();
+
+            enumerator.MoveNext();
+            enumerator.Current.Should().Be(value1);
         }
 
-    }
-
-    public class LinkedList : ICollection<int>
-    {
-        private int _itemCount;
-
-        public LinkedList()
+        [Theory]
+        [InlineData(1, 2)]
+        [InlineData(2, 10)]
+        [InlineData(3, 44)]
+        public void ShouldHandleTwoValue(
+            int value1,
+            int value2)
         {
-            _itemCount = 0;
+            var linkedList = new LinkedList();
+
+            linkedList.Add(value1);
+            linkedList.Add(value2);
+
+            linkedList.Count.Should().Be(2);
+
+            var enumerator = linkedList.GetEnumerator();
+
+            enumerator.MoveNext();
+            enumerator.Current.Should().Be(value1);
+
+            enumerator.MoveNext();
+            enumerator.Current.Should().Be(value2);
         }
 
-        public IEnumerator<int> GetEnumerator()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public void Add(int item)
-        {
-            _itemCount++;
-        }
-
-        public void Clear()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool Contains(int item)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void CopyTo(int[] array, int arrayIndex)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool Remove(int item)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public int Count
-        {
-            get { return _itemCount; }
-
-        }
-        public bool IsReadOnly { get; }
     }
 }
