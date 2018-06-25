@@ -32,264 +32,53 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h1>Test Doubles</h1>
-					<p>(Mocking)</p>
+					<h1>Test Driven Development</h1>
+				</section>
+
+				<section>
+					<img src="https://cdn-images-1.medium.com/max/1600/1*jFw7ZZMoVcsEYM_fS33DBA.gif">
 				</section>
 
 				<section>
 					<section>
-						<h2>Why use test doubles</h2>
+						<h2>How to</h2>
+						<p>Step by Step</p>
 					</section>
 
 					<section>
-						<h4>We want to test our code but...</h4>
+						<p style="color: red">Red</p>
+						<h3>Write a failing test</h3>
+						<p>Not compiling is a failure.</p>
 					</section>
 
 					<section>
-						<h4>we have dependency on a resource we do not control.</h4>
+						<p style="color: red">Red</p>
+						<h3>Watch the test fail</h3>
+						<p>It should fail the an expected reason.</p>
 					</section>
 
 					<section>
-						<h3>Dependencies like...</h3>
-						<ul>
-							<li>a centralized database</li>
-							<li>a third party web service / library</li>
-							<li>an email server</li>
-							<li>something REALLY slow</li>
-						</ul>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h2>Review Interfaces</h2>
+						<p style="color: green">Green</p>
+						<h3>Make the test pass</h3>
+						<p>Write just enough code.</p>
 					</section>
 
 					<section>
-						<img src="images/SystemLogInterfaceExample.png" />
+						<p style="color: purple">Refactor</p>
+						<h3>Improve Production Code Quality</h3>
+						<p>Minimize duplication.</p>
 					</section>
 
 					<section>
-						<h3><a href="CodeSamples.html#InterfaceExample" target="CodeExample">Interface Code Example</a></h3>
-					</section>
-
-				</section>
-
-				<section>
-					<section>
-						<h2>Customer Repository</h2>
-						<p>Code Example</p>
-					</section>
-
-					<section>
-						<img src="images/CustomerRepositoryProductionCodeUml.png" />
-					</section>
-
-					<section>
-						<h3><a href="CodeSamples.html#CustomerRepository" target="CodeExample">Code Example</a></h3>
+						<p style="color: purple">Refactor</p>
+						<h3>Improve Test Code Quality</h3>
+						<p>Minimize duplication.</p>
 					</section>
 
 				</section>
 
 				<section>
-					<p>Goal</p>
-					<h3>Unit Test Customer Repository</h3>
-				</section>
-
-				<section>
-					<h2>Test Doubles</h2>
-					<ul>
-						<li>Dummy</li>
-						<li>Spy</li>
-						<li>Stub</li>
-						<li>Fake</li>
-						<li>Mock (True Mock)</li>
-					</ul>
-				</section>
-
-				<section>
-					<p class="SmallTopTitle"><small>Test Double</small></p>
-					<h2>Dummy</h2>
-
-					<section>
-						<h3>Returns as close to null as possible</h3>
-					</section>
-
-					<section>
-						<h3>Is mainly a placeholder</h3>
-					</section>
-
-					<section>
-						<img src="images/CustomerRepositoryProductionGetSeq.png" />
-						<p class="SmallTopTitle"><small>Production Code : Get</small></p>
-					</section>
-
-					<section>
-						<img src="images/CustomerRepositoryTestGetWithDummySeq.png" />
-						<p class="SmallTopTitle"><small>Test Code : Get</small></p>
-					</section>
-
-					<section>
-						<h3><a href="CodeSamples.html#UnitTestWithDummy" target="CodeExample">Code Example</a></h3>
-					</section>
-
-				</section>
-
-				<section>
-					<p class="SmallTopTitle"><small>Test Double</small></p>
-					<h2>Spy</h2>
-
-					<section>
-						<h3>Saves what was called</h3>
-						<p>Is a Dummy</p>
-					</section>
-
-					<section>
-						<img src="images/CustomerRepositoryProductionSaveWithUpdateSeq.png" />
-						<p class="SmallTopTitle"><small>Production Code : Save with Update</small></p>
-					</section>
-
-					<section>
-						<img src="images/CustomerRepositoryTestSaveWithUpdateWithSpySeq.png" />
-						<p class="SmallTopTitle"><small>Test Code : Save with Update</small></p>
-					</section>
-
-					<section>
-						<h3><a href="CodeSamples.html#UnitTestWithSpy" target="CodeExample">Code Example</a></h3>
-					</section>
-
-				</section>
-
-				<section>
-					<p class="SmallTopTitle"><small>Test Double</small></p>
-					<h2>Stub</h2>
-
-					<section>
-						<h3>Returns a fixed set of data</h3>
-						<p>Is a Spy</p>
-					</section>
-
-					<section>
-						<img src="images/CustomerRepositoryProductionGetAllSeq.png" />
-						<p class="SmallTopTitle"><small>Production Code : GetAll</small></p>
-					</section>
-
-					<section>
-						<img src="images/CustomerRepositoryTestGetAllWithStubSeq.png" />
-						<p class="SmallTopTitle"><small>Test Code : Get All</small></p>
-					</section>
-
-					<section>
-						<h3><a href="CodeSamples.html#UnitTestWithStub" target="CodeExample">Code Example</a></h3>
-					</section>
-
-					<section>
-						<p>Tip</p>
-						<h3>Limit the reuse of stubs to lookup data</h3>
-					</section>
-
-					<section>
-						<img src="images/StubReuse1.png" />
-					</section>
-
-					<section>
-						<img src="images/StubReuse2.png" />
-					</section>
-
-				</section>
-
-				<section>
-					<p class="SmallTopTitle"><small>Test Double</small></p>
-					<h2>Fake</h2>
-
-					<section>
-						<h3>Simulates an external resource</h3>
-					</section>
-
-					<section>
-						<img src="images/CustomerRepositoryProductionGetAllSeq.png" />
-						<p class="SmallTopTitle"><small>Production Code : GetAll</small></p>
-					</section>
-
-					<section>
-						<img src="images/CustomerRepositoryTestGetAllWithFakeSeq.png" />
-						<p class="SmallTopTitle"><small>Test Code : Get All</small></p>
-					</section>
-
-					<section>
-						<h3><a href="CodeSamples.html#UnitTestWithFake" target="CodeExample">Code Example</a></h3>
-					</section>
-
-					<section>
-						<h3>More reusable than stubs</h3>
-					</section>
-
-					<section>
-						<h3>Can get complicated</h3>
-						<p>They have have bugs.</p>
-					</section>
-
-					<section>
-						<h3>Can get complicated</h3>
-						<p>They have have bugs.</p>
-					</section>
-
-				</section>
-
-				<section>
-					<p class="SmallTopTitle"><small>Test Double</small></p>
-					<h2>Mock</h2>
-
-					<section>
-						<h3>Tracks what happened during a test</h3>
-					</section>
-
-					<section>
-						<h3><a href="CodeSamples.html#UnitTestWithMock" target="CodeExample">Code Example</a></h3>
-					</section>
-
-				</section>
-
-				<section>
-					<section>
-						<p>Warning</p>
-						<h3>Test Doubles introduce extra coupling</h3>
-					</section>
-
-					<section>
-						<img src="images/TestDoubleStrongCoupling.png" />
-					</section>
-
-				</section>
-
-				<section>
-					<section>
-						<h3>Coded Test Doubles</h3>
-						<p>vs.</p>
-						<h3>Mocking Frameworks</h3>
-					</section>
-
-					<section>
-						<p>Mocking Frameworks are more complex and harder to understand.</p>
-					</section>
-
-					<section>
-						<p>Mocking Frameworks require less code.</p>
-					</section>
-
-					<section>
-						<p>Mocking Frameworks introduce more equality problems.</p>
-					</section>
-
-				</section>
-
-				<section>
-					<p class="SmallTopTitle"><small>More Information</small></p>
-					<h2>Clean Code</h2>
-					<ul>
-						<li><a href="https://cleancoders.com/episode/clean-code-episode-23-p1/show" target="_blank">Mocking (Episode 22 part 1)</a></li>
-						<li><a href="https://cleancoders.com/episode/clean-code-episode-23-p2/show" target="_blank">Mocking (Episode 23 part 2)</a></li>
-					</ul>
+					<h2>Test Edge Cases First</h2>
 				</section>
 
 			</div>
