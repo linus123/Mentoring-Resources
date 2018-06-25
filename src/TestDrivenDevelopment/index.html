@@ -1,0 +1,316 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Mentoring: Test Doubles</title>
+
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/reveal.css">
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../lib/reveal.js-3.4.1/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../lib/reveal.js-3.4.1/css/print/pdf.css' : '../../lib/reveal.js-3.4.1/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style>
+			.reveal p.SmallTopTitle {
+				margin: 0;
+				line-height: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Test Doubles</h1>
+					<p>(Mocking)</p>
+				</section>
+
+				<section>
+					<section>
+						<h2>Why use test doubles</h2>
+					</section>
+
+					<section>
+						<h4>We want to test our code but...</h4>
+					</section>
+
+					<section>
+						<h4>we have dependency on a resource we do not control.</h4>
+					</section>
+
+					<section>
+						<h3>Dependencies like...</h3>
+						<ul>
+							<li>a centralized database</li>
+							<li>a third party web service / library</li>
+							<li>an email server</li>
+							<li>something REALLY slow</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Review Interfaces</h2>
+					</section>
+
+					<section>
+						<img src="images/SystemLogInterfaceExample.png" />
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#InterfaceExample" target="CodeExample">Interface Code Example</a></h3>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Customer Repository</h2>
+						<p>Code Example</p>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryProductionCodeUml.png" />
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#CustomerRepository" target="CodeExample">Code Example</a></h3>
+					</section>
+
+				</section>
+
+				<section>
+					<p>Goal</p>
+					<h3>Unit Test Customer Repository</h3>
+				</section>
+
+				<section>
+					<h2>Test Doubles</h2>
+					<ul>
+						<li>Dummy</li>
+						<li>Spy</li>
+						<li>Stub</li>
+						<li>Fake</li>
+						<li>Mock (True Mock)</li>
+					</ul>
+				</section>
+
+				<section>
+					<p class="SmallTopTitle"><small>Test Double</small></p>
+					<h2>Dummy</h2>
+
+					<section>
+						<h3>Returns as close to null as possible</h3>
+					</section>
+
+					<section>
+						<h3>Is mainly a placeholder</h3>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryProductionGetSeq.png" />
+						<p class="SmallTopTitle"><small>Production Code : Get</small></p>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryTestGetWithDummySeq.png" />
+						<p class="SmallTopTitle"><small>Test Code : Get</small></p>
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#UnitTestWithDummy" target="CodeExample">Code Example</a></h3>
+					</section>
+
+				</section>
+
+				<section>
+					<p class="SmallTopTitle"><small>Test Double</small></p>
+					<h2>Spy</h2>
+
+					<section>
+						<h3>Saves what was called</h3>
+						<p>Is a Dummy</p>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryProductionSaveWithUpdateSeq.png" />
+						<p class="SmallTopTitle"><small>Production Code : Save with Update</small></p>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryTestSaveWithUpdateWithSpySeq.png" />
+						<p class="SmallTopTitle"><small>Test Code : Save with Update</small></p>
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#UnitTestWithSpy" target="CodeExample">Code Example</a></h3>
+					</section>
+
+				</section>
+
+				<section>
+					<p class="SmallTopTitle"><small>Test Double</small></p>
+					<h2>Stub</h2>
+
+					<section>
+						<h3>Returns a fixed set of data</h3>
+						<p>Is a Spy</p>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryProductionGetAllSeq.png" />
+						<p class="SmallTopTitle"><small>Production Code : GetAll</small></p>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryTestGetAllWithStubSeq.png" />
+						<p class="SmallTopTitle"><small>Test Code : Get All</small></p>
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#UnitTestWithStub" target="CodeExample">Code Example</a></h3>
+					</section>
+
+					<section>
+						<p>Tip</p>
+						<h3>Limit the reuse of stubs to lookup data</h3>
+					</section>
+
+					<section>
+						<img src="images/StubReuse1.png" />
+					</section>
+
+					<section>
+						<img src="images/StubReuse2.png" />
+					</section>
+
+				</section>
+
+				<section>
+					<p class="SmallTopTitle"><small>Test Double</small></p>
+					<h2>Fake</h2>
+
+					<section>
+						<h3>Simulates an external resource</h3>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryProductionGetAllSeq.png" />
+						<p class="SmallTopTitle"><small>Production Code : GetAll</small></p>
+					</section>
+
+					<section>
+						<img src="images/CustomerRepositoryTestGetAllWithFakeSeq.png" />
+						<p class="SmallTopTitle"><small>Test Code : Get All</small></p>
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#UnitTestWithFake" target="CodeExample">Code Example</a></h3>
+					</section>
+
+					<section>
+						<h3>More reusable than stubs</h3>
+					</section>
+
+					<section>
+						<h3>Can get complicated</h3>
+						<p>They have have bugs.</p>
+					</section>
+
+					<section>
+						<h3>Can get complicated</h3>
+						<p>They have have bugs.</p>
+					</section>
+
+				</section>
+
+				<section>
+					<p class="SmallTopTitle"><small>Test Double</small></p>
+					<h2>Mock</h2>
+
+					<section>
+						<h3>Tracks what happened during a test</h3>
+					</section>
+
+					<section>
+						<h3><a href="CodeSamples.html#UnitTestWithMock" target="CodeExample">Code Example</a></h3>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<p>Warning</p>
+						<h3>Test Doubles introduce extra coupling</h3>
+					</section>
+
+					<section>
+						<img src="images/TestDoubleStrongCoupling.png" />
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h3>Coded Test Doubles</h3>
+						<p>vs.</p>
+						<h3>Mocking Frameworks</h3>
+					</section>
+
+					<section>
+						<p>Mocking Frameworks are more complex and harder to understand.</p>
+					</section>
+
+					<section>
+						<p>Mocking Frameworks require less code.</p>
+					</section>
+
+					<section>
+						<p>Mocking Frameworks introduce more equality problems.</p>
+					</section>
+
+				</section>
+
+				<section>
+					<p class="SmallTopTitle"><small>More Information</small></p>
+					<h2>Clean Code</h2>
+					<ul>
+						<li><a href="https://cleancoders.com/episode/clean-code-episode-23-p1/show" target="_blank">Mocking (Episode 22 part 1)</a></li>
+						<li><a href="https://cleancoders.com/episode/clean-code-episode-23-p2/show" target="_blank">Mocking (Episode 23 part 2)</a></li>
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="../../lib/reveal.js-3.4.1/lib/js/head.min.js"></script>
+		<script src="../../lib/reveal.js-3.4.1/js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../lib/reveal.js-3.4.1/plugin/markdown/marked.js' },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/markdown/markdown.js' },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/notes/notes.js', async: true },
+					{ src: '../../lib/reveal.js-3.4.1/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
